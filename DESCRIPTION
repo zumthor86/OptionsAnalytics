@@ -1,13 +1,14 @@
 Package: OptionsAnalytics
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Provides advanced options strategies analytics 
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Christopher Sumter
+Maintainer: The package maintainer <csumter1165@gmail.com>
+Description: This package allows one to aggregate options greeks at the strategy level and plot these exposures over time 
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports: 
     fOptions
+URL: https://github.com/zumthor86/OptionsAnalytics
+BugReports: https://github.com/zumthor86/OptionsAnalytics/issues
