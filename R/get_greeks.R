@@ -10,7 +10,7 @@ get_greeks <- function(underlyer="SP 500", strike_price, expiry, r=0.005, b=0, u
 
   expiry_datetime <- get_option_expiry_datetime(epic)
 
-  time_to_mat <- int_length(interval(underlyer_quote$dateTime, expiry_datetime))/31536000
+  time_to_mat <- compute_ttm_years(underlyer_quote$dateTime, expiry_datetime)
 
   get_greek <- purrr::partial(fOptions::GBSGreeks,
                               TypeFlag = tolower(option_type),
@@ -24,7 +24,7 @@ get_greeks <- function(underlyer="SP 500", strike_price, expiry, r=0.005, b=0, u
 
   greek_selections <- c("delta", "gamma", "vega", "rho", "theta")
 
-  greeks <- map(greek_selections, ~get_greek(Selection=.))
+  greeks <- purrr::map(greek_selections, ~get_greek(Selection=.))
 
   names(greeks) <- greek_selections
 

@@ -9,6 +9,8 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    fOptions
+    fOptions,
+    httr,
+    glue
 URL: https://github.com/zumthor86/OptionsAnalytics
 BugReports: https://github.com/zumthor86/OptionsAnalytics/issues

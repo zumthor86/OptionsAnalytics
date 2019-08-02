@@ -28,7 +28,7 @@ priceReq <- function(epic = "IX.D.SPTRD.DAILY.IP", resolution='HOUR', n_prices=1
     open = opens,
     high = highs,
     low = lows,
-    dateTime = dateTime,
+    date_time = dateTime,
     volume = volume
   )
 

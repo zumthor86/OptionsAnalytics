@@ -12,6 +12,6 @@ get_option_expiry <- function(epic){
     )
   )
 
-  response %>% httr::content() %>% pluck('instrument', 'expiryDetails', 'lastDealingDate')
+  response %>% httr::content() %>% purrr::pluck('instrument', 'expiryDetails', 'lastDealingDate')
 
 }
