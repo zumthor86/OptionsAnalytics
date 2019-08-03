@@ -14,3 +14,5 @@ Imports:
     glue
 URL: https://github.com/zumthor86/OptionsAnalytics
 BugReports: https://github.com/zumthor86/OptionsAnalytics/issues
+Suggests: 
+    testthat
