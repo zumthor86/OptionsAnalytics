@@ -1,6 +1,8 @@
 priceReq <- function(epic = "IX.D.SPTRD.DAILY.IP", resolution='HOUR', n_prices=100) {
   reqUrl <- glue::glue("https://api.ig.com/gateway/deal/prices/{epic}?resolution={resolution}&max={n_prices}&pageSize={n_prices}")
 
+  Sys.sleep(2)
+
   response <- httr::GET(
     url = reqUrl,
     config = httr::add_headers(

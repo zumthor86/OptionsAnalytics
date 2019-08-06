@@ -34,7 +34,7 @@ get_straddle_price_history <- function(put_strike, call_strike, n_prices, resolu
     map_df(~ modify_if(., is.null, ~ 0 )) %>%
     modify_if(is.list, unlist)
 
-  bind_cols(dateTime = put$dateTime,
+  bind_cols(date_time = put$date_time,
             put[,price_columns]+call[,price_columns])
 
 }
