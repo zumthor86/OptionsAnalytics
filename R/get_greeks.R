@@ -10,7 +10,7 @@ get_greeks <- function(underlyer="SP 500", strike_price, expiry, r=0.005, b=0, u
 
   expiry_datetime <- get_option_expiry_datetime(epic)
 
-  time_to_mat <- compute_ttm_years(underlyer_quote$dateTime, expiry_datetime)
+  time_to_mat <- compute_ttm_years(underlyer_quote$date_time, expiry_datetime)
 
   get_greek <- purrr::partial(fOptions::GBSGreeks,
                               TypeFlag = tolower(option_type),
