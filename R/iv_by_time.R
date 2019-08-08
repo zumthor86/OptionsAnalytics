@@ -1,4 +1,8 @@
-iv_by_time <- function(underlying_prices, option_prices, strike, option_type='C', resolution = 'HOUR'){
+iv_by_time <- function(underlying_prices,
+                       option_prices,
+                       strike,
+                       option_type='C',
+                       resolution = 'HOUR'){
 
 
   expiry <- get_option_expiry_datetime(option_prices$epic[1])

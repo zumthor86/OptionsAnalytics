@@ -19,6 +19,8 @@ request_prices <-
       )
     )
 
+    assertthat::assert_that(response$status_code==200, msg = glue::glue("Response code: {response$status_code}"))
+
     prcs <- httr::content(response)
 
     price_names <- c("closePrice",
@@ -29,12 +31,12 @@ request_prices <-
     prices <- map(price_names,
                   function(x)
                     map_dbl(prcs$prices,
-                            ~ pluck(., x, "bid")))
+                            ~ purrr::possibly(pluck(., x, "bid"))))
 
     dateTime <- map(prcs$prices, ~ pluck(., "snapshotTimeUTC")) %>%
       lubridate::ymd_hms()
 
-    volume <- map_int(prcs$prices, ~ pluck(., "lastTradedVolume"))
+    volume <- map_int(prcs$prices, ~ purrr::possibly(pluck(., "lastTradedVolume")))
 
     names(prices) <- c('close', 'open', 'high', 'low')
 
