@@ -1,23 +1,11 @@
 search_markets <- function(search_term){
 
-  req_url <- httr::parse_url("https://api.ig.com/gateway/deal/markets")
+  query <- list(searchTerm = search_term)
 
-  req_url$query <- list(searchTerm = search_term)
+  response <- make_ig_request(api_version = 1, query = query, path = "markets") %>%
+    httr::content()
 
-  comp <- httr::parse_url('https://api.ig.com/gateway/deal/markets?searchTerm=US%20500%20Call')
-
-  response <- httr::GET(
-    url = req_url,
-    config = httr::add_headers(
-      VERSION = 1,
-      `X-IG-API-KEY` = Sys.getenv("IG_API_KEY"),
-      CST = .session$headers$cst,
-      `X-SECURITY-TOKEN` = .session$headers$`x-security-token`
-    )
-  ) %>% httr::content()
-
-  bind_rows(response$markets)
-
+  dplyr::bind_rows(response$markets)
 
 }
 

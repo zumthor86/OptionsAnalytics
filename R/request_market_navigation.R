@@ -1,15 +1,21 @@
+#' Request market node data
+#'
+#' @param node_id Numeric id for a particular node in the market hierarchy
+#'
+#' @return Node data, containing either IDs of children nodes or market information if its a leaf
+#' @export
+#'
+#' @examples
+#' /dontrun{
+#'
+#' request_market_navigation <- function(346003)
+#'
+#' }
 request_market_navigation <- function(node_id){
 
-  request_url <- glue::glue("https://api.ig.com/gateway/deal/marketnavigation/{node_id}")
+  path <- glue::glue("marketnavigation/{node_id}")
 
-  response <- httr::GET(
-    url = request_url,
-    config = httr::add_headers(
-      VERSION = 1,
-      `X-IG-API-KEY` = Sys.getenv("IG_API_KEY"),
-      CST = .session$headers$cst,
-      `X-SECURITY-TOKEN` = .session$headers$`x-security-token`
-    )
-  ) %>% httr::content()
+  make_ig_request(path = path, api_version = 1) %>%
+    httr::content()
 
 }

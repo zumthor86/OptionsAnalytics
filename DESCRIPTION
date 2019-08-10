@@ -14,8 +14,13 @@ Imports:
     glue,
     purrr,
     dplyr,
-    stringr
+    stringr,
+    magrittr,
+    assertthat,
+    lubridate
 URL: https://github.com/zumthor86/OptionsAnalytics
 BugReports: https://github.com/zumthor86/OptionsAnalytics/issues
 Suggests: 
     testthat
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
