@@ -11,7 +11,10 @@ LazyData: true
 Imports: 
     fOptions,
     httr,
-    glue
+    glue,
+    purrr,
+    dplyr,
+    stringr
 URL: https://github.com/zumthor86/OptionsAnalytics
 BugReports: https://github.com/zumthor86/OptionsAnalytics/issues
 Suggests: 
