@@ -24,19 +24,8 @@ get_straddle_price_history <- function(put_strike,
                                    expiry = expiry
                                    )
 
-  # call <- map(call, unlist) %>%
+ price_columns <- c("close", "open", "high", "low")
 
-
-  price_columns <- c("close", "open", "high", "low")
-
-
-  put <- put %>%
-    map_df(~ modify_if(., is.null, ~ 0)) %>%
-    modify_if(is.list, unlist)
-
-  call <- call %>%
-    map_df(~ modify_if(., is.null, ~ 0)) %>%
-    modify_if(is.list, unlist)
 
   bind_cols(date_time = put$date_time,
             put[, price_columns] + call[, price_columns])

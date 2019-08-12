@@ -1,8 +1,8 @@
-startIGSession <- function() {
+initiate_IG_Session <- function() {
   body = list(identifier = Sys.getenv("IG_USERNAME"),
               password = Sys.getenv("IG_PASSWORD"))
 
-    httr::POST(
+    .session <<- httr::POST(
       url = "https://api.ig.com/gateway/deal/session",
       body = body,
       config = httr::add_headers(

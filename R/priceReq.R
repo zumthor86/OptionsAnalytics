@@ -38,14 +38,14 @@ request_prices <-
                      "highPrice",
                      "lowPrice")
 
-    prices <-  purrr::map_depth(prcs$prices, 2, ~pluck(.,"bid")) %>%
-      purrr::map(purrr::discard, .p=is.null) %>%
-      dplyr::bind_rows()
+    prices <-  purrr::map_depth(prcs$prices, 2, ~pluck(.,"bid", .default = 0)) %>%
+            dplyr::bind_rows() %>%
+            dplyr::select(dplyr::one_of(price_names))
 
-    dateTime <- map(prcs$prices, ~ purrr::pluck(., "snapshotTimeUTC")) %>%
+    dateTime <- purrr::map(prcs$prices, ~ purrr::pluck(., "snapshotTimeUTC")) %>%
       lubridate::ymd_hms()
 
-    volume <- map_int(prcs$prices, ~ purrr::pluck(., "lastTradedVolume", .default = 0))
+    volume <- purrr::map_int(prcs$prices, ~ purrr::pluck(., "lastTradedVolume", .default = 0))
 
     names(prices) <- c('close', 'open', 'high', 'low')
 
