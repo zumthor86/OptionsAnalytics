@@ -28,9 +28,6 @@ request_prices <-
                                              "max" = n_prices,
                                              "pageSize" = n_prices))
 
-    assertthat::assert_that(response$status_code==200,
-                            msg = glue::glue("Response code: {response$status_code}"))
-
     prcs <- httr::content(response)
 
     price_names <- c("closePrice",

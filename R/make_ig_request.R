@@ -14,6 +14,10 @@ make_ig_request <- function(path, api_version, query=NULL){
       `X-SECURITY-TOKEN` = .session$headers$`x-security-token`
     ))
 
+  assertthat::assert_that(response$status_code==200,
+                          msg = glue::glue("Response code: {response$status_code}"))
+
+
 }
 
 

@@ -1,4 +1,10 @@
-initiate_IG_Session <- function() {
+#' Initiate IG Session
+#'
+#' @return
+#' @export
+#'
+#' @examples
+initiate_ig_session <- function() {
   body = list(identifier = Sys.getenv("IG_USERNAME"),
               password = Sys.getenv("IG_PASSWORD"))
 
