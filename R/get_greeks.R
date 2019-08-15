@@ -1,7 +1,22 @@
+#' Compute greeks for an option
+#'
+#' @param underlyer Name of underlyer,
+#' @param strike_price Option strike price
+#' @param expiry DateTime of option expiry
+#' @param r Annualized rate of interest, *as a decimal*, eg. 0.5 \% is 0.05
+#' @param b Annualized cost of carry *as a decimal*
+#' @param underlyer_annual_vol Annualized volatility of the underlyer *as a decimal*
+#' @param option_type "c" or "p", call or put
+#' @param exposure Amount bet per point, eg. 1
+#'
+#' @return Named list of option sensitivities/greeks: "delta", "gamma", "vega", "rho", "theta"
+#' @export
+#'
+#' @examples
 get_greeks <- function(underlyer="SP 500",
                        strike_price,
                        expiry,
-                       r=0.005,
+                       r=0.05,
                        b=0,
                        underlyer_annual_vol=0.075,
                        option_type="C",
