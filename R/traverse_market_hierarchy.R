@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-traverse_market_hierarchy <- function(node_id, pause=1) {
+traverse_market_hierarchy <- function(node_id, pause=0) {
   slow_mkt_nav <- slowExec(pause, request_market_navigation)
 
   results <- slow_mkt_nav(node_id)

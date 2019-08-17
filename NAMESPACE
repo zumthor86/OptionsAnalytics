@@ -2,6 +2,7 @@
 
 export("%>%")
 export(compute_ttm_years)
+export(create_nodes_list)
 export(get_greeks)
 export(initiate_ig_session)
 export(intersect_prices)
