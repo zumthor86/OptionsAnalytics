@@ -1,11 +1,7 @@
-slowExec <- function(pause, f,  ...){
-
-  function(...){
-
+slowExec <- function(pause, f, ...) {
+  function(...) {
     Sys.sleep(pause)
 
     f(...)
-
   }
-
 }
