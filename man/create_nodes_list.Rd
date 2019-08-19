@@ -4,7 +4,7 @@
 \alias{create_nodes_list}
 \title{Create named list of market nodes}
 \usage{
-create_nodes_list(node_id)
+create_nodes_list(node_id, recursive = FALSE)
 }
 \arguments{
 \item{node_id}{}

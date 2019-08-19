@@ -4,7 +4,7 @@
 \alias{traverse_market_hierarchy}
 \title{Traverse IG markets hierarchy}
 \usage{
-traverse_market_hierarchy(node_id, pause = 1)
+traverse_market_hierarchy(node_id, pause = 0)
 }
 \arguments{
 \item{node_id}{ID of the node from which to begin the traversal, see \href{https://labs.ig.com/rest-trading-api-reference/service-detail?id=544}{API documentation}}
