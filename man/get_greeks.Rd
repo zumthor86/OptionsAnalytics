@@ -5,7 +5,8 @@
 \title{Compute greeks for an option}
 \usage{
 get_greeks(epic, r = 0.05, b = 0, underlyer_annual_vol = 0.075,
-  exposure = 1)
+  exposure = 1, greek_selections = c("delta", "gamma", "vega",
+  "theta"))
 }
 \arguments{
 \item{epic}{Option epic}

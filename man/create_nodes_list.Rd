@@ -7,7 +7,7 @@
 create_nodes_list(node_id, recursive = FALSE)
 }
 \arguments{
-\item{node_id}{}
+\item{node_id}{ID of the market node}
 }
 \value{
 Named list where the node_ids constitute the values

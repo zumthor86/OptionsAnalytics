@@ -9,7 +9,6 @@
 #'
 #' @examples
 intersect_prices <- function(prices) {
-
   common_idx <- map(prices, "date_time") %>%
     purrr::reduce(intersect) %>%
     lubridate::as_datetime()

@@ -1,6 +1,6 @@
 #' Create named list of market nodes
 #'
-#' @param node_id
+#' @param node_id ID of the market node
 #'
 #' @return Named list where the node_ids constitute the values
 #' @export

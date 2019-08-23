@@ -13,7 +13,7 @@ iv_by_time <- function(underlying_prices,
                        option_prices,
                        strike,
                        option_type = "C") {
-  expiry <- get_option_expiry_datetime(option_prices$epic[1])
+  expiry <- get_option_details(option_prices$epic[1])$expiry_datetime
 
   implied_vol <- purrr::partial(
     .f = fOptions::GBSVolatility,

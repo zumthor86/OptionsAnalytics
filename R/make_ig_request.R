@@ -1,3 +1,13 @@
+#' Make generic IG API request
+#'
+#' @param path API endpoint
+#' @param api_version Certain endpoints are available for certain versions
+#' @param query Optional query parameters
+#'
+#' @return
+#' @export
+#'
+#' @examples
 make_ig_request <- function(path, api_version, query = NULL) {
   request_url <- httr::modify_url(
     url = glue::glue("https://{Sys.getenv('IG_HOST')}"),
@@ -16,7 +26,7 @@ make_ig_request <- function(path, api_version, query = NULL) {
   )
 
   assertthat::assert_that(response$status_code == 200,
-    msg = glue::glue("Response code: {response$status_code}")
+    msg = glue::glue("Response code: {httr::content(response)[[1]]}")
   )
 
   response

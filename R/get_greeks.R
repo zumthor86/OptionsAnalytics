@@ -15,8 +15,8 @@ get_greeks <- function(epic,
                        r = 0.05,
                        b = 0,
                        underlyer_annual_vol = 0.075,
-                       exposure = 1) {
-
+                       exposure = 1,
+                       greek_selections = c("delta", "gamma", "vega", "theta")) {
   underlyer_quote <- request_prices(
     epic = get_option_underlyer(epic),
     resolution = "MINUTE",
@@ -37,15 +37,13 @@ get_greeks <- function(epic,
     sigma = underlyer_annual_vol
   )
 
-  greek_selections <- c("delta", "gamma", "vega", "rho", "theta")
-
   greeks <- purrr::map(greek_selections, ~ get_greek(Selection = .))
 
   names(greeks) <- greek_selections
 
   greeks$vega <- greeks$vega * exposure / 100
 
-  greeks$theta <- greeks$theta * exposure / 100
+  # greeks$theta <- greeks$theta * exposure / 100
 
   greeks
 }

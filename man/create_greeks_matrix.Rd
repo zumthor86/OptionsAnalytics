@@ -9,6 +9,9 @@ create_greeks_matrix(epics)
 \arguments{
 \item{epics}{List of epics}
 }
+\value{
+Matrix of dimension (n_greeks, n_options)
+}
 \description{
 Create matrix of greeks for multiple options
 }

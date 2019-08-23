@@ -11,7 +11,10 @@ create_options_matrix(epics, resolution, n_prices)
 
 \item{resolution}{Price resolution, eg. MINUTE_5, HOUR}
 
-\item{n_prices}{Number of prices}
+\item{n_prices}{Number of prices to request}
+}
+\value{
+Matrix of dimension (n_prices, n_options)
 }
 \description{
 Create options matrix of prices from epics

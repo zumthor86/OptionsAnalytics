@@ -4,7 +4,13 @@
 \alias{initiate_ig_session}
 \title{Initiate IG Session}
 \usage{
-initiate_ig_session()
+initiate_ig_session(key = "IG_API_KEY")
+}
+\arguments{
+\item{key}{Name of api key environment variable}
+}
+\value{
+List of session information in global environment
 }
 \description{
 Initiate IG Session
