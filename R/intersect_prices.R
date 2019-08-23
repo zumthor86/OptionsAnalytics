@@ -8,12 +8,11 @@
 #' @importFrom purrr reduce
 #'
 #' @examples
-intersect_prices <- function(...) {
-  price_ts <- list(...)
+intersect_prices <- function(prices) {
 
-  common_idx <- map(price_ts, "date_time") %>%
+  common_idx <- map(prices, "date_time") %>%
     purrr::reduce(intersect) %>%
     lubridate::as_datetime()
 
-  purrr::map(price_ts, ~ dplyr::filter(., .data$date_time %in% common_idx))
+  purrr::map(prices, ~ dplyr::filter(., .data$date_time %in% common_idx))
 }
