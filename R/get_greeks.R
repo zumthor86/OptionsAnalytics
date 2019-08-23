@@ -1,8 +1,6 @@
 #' Compute greeks for an option
 #'
-#' @param underlyer Name of underlyer,
-#' @param strike_price Option strike price
-#' @param expiry DateTime of option expiry
+#' @param epic Option epic
 #' @param r Annualized rate of interest, *as a decimal*, eg. 0.5 \% is 0.05
 #' @param b Annualized cost of carry *as a decimal*
 #' @param underlyer_annual_vol Annualized volatility of the underlyer *as a decimal*
@@ -13,34 +11,26 @@
 #' @export
 #'
 #' @examples
-get_greeks <- function(underlyer = "SP 500",
-                       strike_price,
-                       expiry,
+get_greeks <- function(epic,
                        r = 0.05,
                        b = 0,
                        underlyer_annual_vol = 0.075,
-                       option_type = "C",
                        exposure = 1) {
+
   underlyer_quote <- request_prices(
-    epic = .underlyer_epics[underlyer],
+    epic = get_option_underlyer(epic),
     resolution = "MINUTE",
     n_prices = 1
   )
 
-  epic <- get_option_epic(
-    strike = strike_price,
-    option_type = option_type,
-    expiry = expiry
-  )
+  option_details <- get_option_details(epic)
 
-  expiry_datetime <- get_option_expiry_datetime(epic)
-
-  time_to_mat <- compute_ttm_years(underlyer_quote$date_time, expiry_datetime)
+  time_to_mat <- compute_ttm_years(underlyer_quote$date_time, option_details$expiry_datetime)
 
   get_greek <- purrr::partial(fOptions::GBSGreeks,
-    TypeFlag = tolower(option_type),
+    TypeFlag = tolower(option_details$option_type),
     S = underlyer_quote$close,
-    X = strike_price,
+    X = option_details$strike_price,
     Time = time_to_mat,
     r = r,
     b = b,

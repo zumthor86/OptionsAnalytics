@@ -4,7 +4,7 @@
 \alias{intersect_prices}
 \title{Return commmon time series}
 \usage{
-intersect_prices(...)
+intersect_prices(prices)
 }
 \arguments{
 \item{...}{Dataframes containing time series observations}
