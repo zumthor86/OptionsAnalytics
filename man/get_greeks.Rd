@@ -4,13 +4,11 @@
 \alias{get_greeks}
 \title{Compute greeks for an option}
 \usage{
-get_greeks(epic, r = 0.05, b = 0, underlyer_annual_vol = 0.075,
-  exposure = 1, greek_selections = c("delta", "gamma", "vega",
-  "theta"))
+get_greeks(r = 0.05, b = 0, underlyer_annual_vol = 0.075,
+  exposure = 1, time_to_mat, strike_price, underlyer_price, option_type,
+  greek_selections = c("delta", "gamma", "vega", "theta"))
 }
 \arguments{
-\item{epic}{Option epic}
-
 \item{r}{Annualized rate of interest, \emph{as a decimal}, eg. 0.5 \% is 0.05}
 
 \item{b}{Annualized cost of carry \emph{as a decimal}}
@@ -19,7 +17,15 @@ get_greeks(epic, r = 0.05, b = 0, underlyer_annual_vol = 0.075,
 
 \item{exposure}{Amount bet per point, eg. 1}
 
+\item{time_to_mat}{Time to maturity, in years}
+
+\item{strike_price}{Option strike price}
+
+\item{underlyer_price}{Option underlyer price}
+
 \item{option_type}{"c" or "p", call or put}
+
+\item{greek_selections}{Greeks to compute}
 }
 \value{
 Named list of option sensitivities/greeks: "delta", "gamma", "vega", "rho", "theta"

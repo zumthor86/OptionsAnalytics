@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-create_options_matrix <- function(epics, resolution, n_prices) {
+compute_strategy_prices <- function(epics, resolution, n_prices, positions_matrix) {
   prices <- epics %>%
     purrr::map(~ request_prices(., resolution, n_prices))
 
@@ -22,8 +22,10 @@ create_options_matrix <- function(epics, resolution, n_prices) {
     dplyr::bind_cols() %>%
     as.matrix()
 
-  list(
-    idx = idx[[1]],
-    prices = prices
+  strategy_prices <- prices %*% positions_matrix
+
+  data_frame(
+    date_time = idx[[1]],
+    strategy_prices
   )
 }
