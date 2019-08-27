@@ -5,19 +5,17 @@
 #' @param n_prices Number of prices
 #' @param positions Vector containing position for each option in the strategy
 #'
-#' @return
+#' @return Dataframe of greeks
 #' @export
 #'
 #' @examples
-compute_strategy_greeks_by_time <- function(epics, resolution, n_prices, positions) {
-  underlyer_prices <- get_option_underlyer(epics[[1]]) %>%
-    request_prices(resolution, n_prices)
+compute_strategy_greeks_by_time <- function(epics, underlyer_prices, underlyer_datetimes, positions) {
 
-  epics %>%
+  greeks <- epics %>%
     purrr::map(get_option_details) %>%
     purrr::map(~ greeks_by_time(
-      underlyer_prices = underlyer_prices$close,
-      underlyer_datetimes = underlyer_prices$date_time,
+      underlyer_prices = underlyer_prices,
+      underlyer_datetimes = underlyer_datetimes,
       strike_price = .$strike_price,
       option_type = .$option_type,
       expiry = .$expiry_datetime
@@ -25,5 +23,10 @@ compute_strategy_greeks_by_time <- function(epics, resolution, n_prices, positio
       dplyr::bind_rows() %>%
       as.matrix()) %>%
     purrr::map2(positions, ~ .x * .y) %>%
-    purrr::reduce(.f = `+`)
+    purrr::reduce(.f = `+`) %>%
+    dplyr::as_data_frame()
+
+  dplyr::bind_cols(date_time = underlyer_datetimes, greeks)
+
+
 }

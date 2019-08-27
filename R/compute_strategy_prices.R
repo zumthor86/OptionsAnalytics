@@ -8,14 +8,7 @@
 #' @export
 #'
 #' @examples
-compute_strategy_prices <- function(epics, resolution, n_prices, positions_matrix) {
-  prices <- epics %>%
-    purrr::map(~ request_prices(., resolution, n_prices))
-
-  common_prices <- intersect_prices(prices)
-
-  idx <- common_prices %>%
-    purrr::map("date_time")
+compute_strategy_prices <- function(common_prices, positions_matrix) {
 
   prices <- common_prices %>%
     purrr::map("close") %>%
@@ -24,8 +17,8 @@ compute_strategy_prices <- function(epics, resolution, n_prices, positions_matri
 
   strategy_prices <- prices %*% positions_matrix
 
-  data_frame(
-    date_time = idx[[1]],
-    strategy_prices
+  tibble::tibble(
+    date_time = common_prices[[1]]$date_time,
+    close = strategy_prices
   )
 }

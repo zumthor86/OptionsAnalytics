@@ -4,16 +4,20 @@
 \alias{compute_strategy_greeks_by_time}
 \title{Compute options strategy greeks by time}
 \usage{
-compute_strategy_greeks_by_time(epics, resolution, n_prices, positions)
+compute_strategy_greeks_by_time(epics, underlyer_prices,
+  underlyer_datetimes, positions)
 }
 \arguments{
 \item{epics}{List of instrument epics}
 
+\item{positions}{Vector containing position for each option in the strategy}
+
 \item{resolution}{Resolution of prices}
 
 \item{n_prices}{Number of prices}
-
-\item{positions}{Vector containing position for each option in the strategy}
+}
+\value{
+Dataframe of greeks
 }
 \description{
 Compute options strategy greeks by time

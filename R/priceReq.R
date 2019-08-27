@@ -20,7 +20,8 @@
 request_prices <-
   function(epic = "IX.D.SPTRD.DAILY.IP",
              resolution = "HOUR",
-             n_prices = 100) {
+             n_prices = 100
+           ) {
     response <- make_ig_request(
       api_version = 3,
       path = file.path("prices", epic),

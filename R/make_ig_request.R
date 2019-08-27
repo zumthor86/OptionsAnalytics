@@ -9,8 +9,9 @@
 #'
 #' @examples
 make_ig_request <- function(path, api_version, query = NULL) {
+
   request_url <- httr::modify_url(
-    url = glue::glue("https://{Sys.getenv('IG_HOST')}"),
+    url = glue::glue("https://{Sys.getenv('SESSION_IG_HOST')}"),
     path = file.path("gateway", "deal", path),
     query = query
   )
@@ -19,7 +20,7 @@ make_ig_request <- function(path, api_version, query = NULL) {
     url = request_url,
     config = httr::add_headers(
       VERSION = api_version,
-      `X-IG-API-KEY` = Sys.getenv("IG_API_KEY"),
+      `X-IG-API-KEY` = Sys.getenv("SESSION_IG_API_KEY"),
       CST = .session$headers$cst,
       `X-SECURITY-TOKEN` = .session$headers$`x-security-token`
     )

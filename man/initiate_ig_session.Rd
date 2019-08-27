@@ -4,7 +4,7 @@
 \alias{initiate_ig_session}
 \title{Initiate IG Session}
 \usage{
-initiate_ig_session(key = "IG_API_KEY")
+initiate_ig_session(env = "LIVE")
 }
 \arguments{
 \item{key}{Name of api key environment variable}

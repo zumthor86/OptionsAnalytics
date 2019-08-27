@@ -4,7 +4,7 @@
 \alias{compute_strategy_prices}
 \title{Create options matrix of prices from epics}
 \usage{
-compute_strategy_prices(epics, resolution, n_prices, positions_matrix)
+compute_strategy_prices(common_prices, positions_matrix)
 }
 \arguments{
 \item{epics}{List of epics}
