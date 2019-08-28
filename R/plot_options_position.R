@@ -22,15 +22,12 @@ analyze_options_position <- function(epics, positions, resolution, n_prices){
                                                                         n_prices = n_prices)) %>%
     OptionsAnalytics::intersect_prices()
 
-  strategy_prices <- OptionsAnalytics::compute_strategy_prices(common_prices[1:length(positions)],position_matrix) %>%
-    purrr::modify_at("date_time", as.factor)
+  strategy_prices <- OptionsAnalytics::compute_strategy_prices(common_prices[1:length(positions)],position_matrix)
 
   greeks2 <- OptionsAnalytics::compute_strategy_greeks_by_time(epics = epics[1:length(positions)],
                                                                underlyer_prices = common_prices$underlyer$close,
                                                                underlyer_datetimes = common_prices$underlyer$date_time,
-                                                               positions = positions) %>%
-    purrr::modify_at("date_time", as.factor)
-
+                                                               positions = positions)
 
   greeks_plot <- plotly::plot_ly(greeks2, x=~date_time) %>%
     plotly::add_lines(y=~delta, name="delta") %>%
@@ -47,7 +44,7 @@ analyze_options_position <- function(epics, positions, resolution, n_prices){
                              name = "Current greeks",
                              color = I("blue"))
 
-  underlyer_plot <- plotly::plot_ly(common_prices$underlyer, x=~as.factor(date_time)) %>%
+  underlyer_plot <- plotly::plot_ly(common_prices$underlyer, x=~date_time) %>%
     plotly::add_lines(y=~close, name = "underlyer")
 
   strategy_plot <-  plotly::plot_ly(strategy_prices) %>%
@@ -56,7 +53,7 @@ analyze_options_position <- function(epics, positions, resolution, n_prices){
   price_plots <- plotly::subplot(strategy_plot, greeks_plot, underlyer_plot, shareX = T, nrows = 3)
 
   plotly::subplot(price_plots, greeks_bar_plot, nrows = 1, widths = c(0.8, 0.2)) %>%
-    plotly::layout(legend = list(orientation = "h"), xaxis=list("showticklabels" = F))
+    plotly::layout(plot_bgcolor = '#252525', paper_bgcolor="#252525", legend = list(orientation = "h"), xaxis=list(tickfont = list(color = "#ffffff"), "showticklabels" = F, type="category"))
 
 
 }
