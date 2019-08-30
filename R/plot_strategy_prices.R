@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-analyze_options_position <- function(epics, positions, resolution, n_prices){
+plot_strategy_prices <- function(epics, positions, resolution, n_prices){
 
   underlyer_epic <- OptionsAnalytics::get_option_underlyer(epics[[1]])
 
@@ -29,31 +29,37 @@ analyze_options_position <- function(epics, positions, resolution, n_prices){
                                                                underlyer_datetimes = common_prices$underlyer$date_time,
                                                                positions = positions)
 
+  greeks_colors <- RColorBrewer::brewer.pal(n = 4, name = "YlOrRd")
+
   greeks_plot <- plotly::plot_ly(strategy_greeks, x=~date_time) %>%
-    plotly::add_lines(y=~delta, name="delta") %>%
-    plotly::add_lines(y=~vega, name = "vega") %>%
-    plotly::add_lines(y=~gamma, name="gamma") %>%
-    plotly::add_lines(y=~theta, name = "theta")
-
-  greeks_now <- OptionsAnalytics::extract_current_greeks(strategy_greeks)
-
-  greeks_bar_plot <- plotly::plot_ly(x = greeks_now[,1],
-                             y = rownames(greeks_now),
-                             orientation = "h",
-                             type = "bar",
-                             name = "Current greeks",
-                             color = I("blue"))
+    plotly::add_lines(y=~delta, name="delta",    color = I(greeks_colors[[1]])) %>%
+    plotly::add_lines(y=~vega, name = "vega", color = I(greeks_colors[[2]])) %>%
+    plotly::add_lines(y=~gamma, name="gamma", color = I(greeks_colors[[3]])) %>%
+    plotly::add_lines(y=~theta, name = "theta", color = I(greeks_colors[[4]])) %>%
+    plotly::layout(xaxis=list("type"= "category","title" = "DateTime", color="white", "zeroline"=T, showline=T),
+                   yaxis=list("zeroline"=T, showline=T, "title"="Exposures", color="white"))
 
   underlyer_plot <- plotly::plot_ly(common_prices$underlyer, x=~date_time) %>%
-    plotly::add_lines(y=~close, name = "underlyer")
+    plotly::add_lines(y=~close, name = "underlyer", color = I("white"))%>%
+    plotly::layout(yaxis=list("zeroline"=T, showline=T, "title"="Price", color="white"),
+                   xaxis=list("type"= "category"))
 
   strategy_plot <-  plotly::plot_ly(strategy_prices) %>%
-    plotly::add_lines(x=~date_time, y=~close, name = "strategy")
+    plotly::add_lines(x=~date_time, y=~close, name = "strategy")%>%
+    plotly::layout(yaxis=list("zeroline"=T, showline=T, "title"="Price", color="white"),
+                   xaxis=list("type"= "category"))
 
-  price_plots <- plotly::subplot(strategy_plot, greeks_plot, underlyer_plot, shareX = T, nrows = 3)
+  legend_style <- list(
+    font = list(
+      family = "sans-serif",
+      size = 12,
+      color = "white"))
 
-  plotly::subplot(price_plots, greeks_bar_plot, nrows = 1, widths = c(0.8, 0.2)) %>%
-    plotly::layout(plot_bgcolor = '#252525', paper_bgcolor="#252525", legend = list(orientation = "h"), xaxis=list(tickfont = list(color = "#ffffff"), "showticklabels" = F, type="category"))
+  price_plots <- plotly::subplot(strategy_plot,underlyer_plot, greeks_plot, shareX = T, nrows = 3) %>%
+      plotly::layout(plot_bgcolor = '#252525',
+                     paper_bgcolor="#252525",
+                     xaxis = list("showticklabels"=F),
+                     legend = legend_style)
 
 
 }

@@ -10,6 +10,8 @@
 #' @param underlyer_price Option underlyer price
 #' @param greek_selections Greeks to compute
 #'
+#' @importFrom fOptions GBSGreeks
+#'
 #' @return Named list of option sensitivities/greeks: "delta", "gamma", "vega", "rho", "theta"
 #' @export
 #'

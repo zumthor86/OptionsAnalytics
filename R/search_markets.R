@@ -1,3 +1,11 @@
+#' Search IG Markets
+#'
+#' @param search_term
+#'
+#' @return Dataframe consisting of search results
+#' @export
+#'
+#' @examples
 search_markets <- function(search_term) {
   query <- list(searchTerm = search_term)
 
