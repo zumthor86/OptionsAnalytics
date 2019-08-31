@@ -20,15 +20,26 @@
 request_prices <-
   function(epic = "IX.D.SPTRD.DAILY.IP",
              resolution = "HOUR",
-             n_prices = 100
+             n_prices = 5
            ) {
+
+    assertthat::assert_that(is.numeric(n_prices), msg = "n_prices must be an integer")
+
+    allowable_resolutions <- c("SECOND", "MINUTE", "MINUTE_2", "MINUTE_3", "MINUTE_5",
+                               "MINUTE_10", "MINUTE_15", "MINUTE_30", "HOUR", "HOUR_2",
+                               "HOUR_3", "HOUR_4", "DAY", "WEEK", "MONTH")
+
+    is_allowed <- (resolution %in% allowable_resolutions)
+
+    assertthat::assert_that(is_allowed, msg = "Invalid price resolution")
+
     response <- make_ig_request(
       api_version = 3,
       path = file.path("prices", epic),
       query = list(
         "resolution" = resolution,
-        "max" = n_prices,
-        "pageSize" = n_prices
+        "max" = round(n_prices),
+        "pageSize" = round(n_prices)
       )
     )
 
