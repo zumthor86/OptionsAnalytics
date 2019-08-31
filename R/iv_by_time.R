@@ -13,7 +13,6 @@ iv_by_time <- function(underlying_prices,
                        option_prices,
                        option_datetimes,
                        epic) {
-
   option_details <- get_option_details(epic)
 
   expiry <- option_details$expiry_datetime

@@ -20,14 +20,14 @@
 request_prices <-
   function(epic = "IX.D.SPTRD.DAILY.IP",
              resolution = "HOUR",
-             n_prices = 5
-           ) {
-
+             n_prices = 5) {
     assertthat::assert_that(is.numeric(n_prices), msg = "n_prices must be an integer")
 
-    allowable_resolutions <- c("SECOND", "MINUTE", "MINUTE_2", "MINUTE_3", "MINUTE_5",
-                               "MINUTE_10", "MINUTE_15", "MINUTE_30", "HOUR", "HOUR_2",
-                               "HOUR_3", "HOUR_4", "DAY", "WEEK", "MONTH")
+    allowable_resolutions <- c(
+      "SECOND", "MINUTE", "MINUTE_2", "MINUTE_3", "MINUTE_5",
+      "MINUTE_10", "MINUTE_15", "MINUTE_30", "HOUR", "HOUR_2",
+      "HOUR_3", "HOUR_4", "DAY", "WEEK", "MONTH"
+    )
 
     is_allowed <- (resolution %in% allowable_resolutions)
 
@@ -56,10 +56,10 @@ request_prices <-
       dplyr::bind_rows() %>%
       dplyr::select(dplyr::one_of(price_names))
 
-    dateTime <- purrr::map(prcs$prices, ~ purrr::pluck(., "snapshotTimeUTC")) %>%
+    dateTime <- purrr::map_chr(prcs$prices, "snapshotTimeUTC") %>%
       lubridate::ymd_hms()
 
-    volume <- purrr::map_int(prcs$prices, ~ purrr::pluck(., "lastTradedVolume", .default = 0))
+    volume <- purrr::map_int(prcs$prices, "lastTradedVolume")
 
     names(prices) <- c("close", "open", "high", "low")
 

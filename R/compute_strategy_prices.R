@@ -9,7 +9,6 @@
 #'
 #' @examples
 compute_strategy_prices <- function(common_prices, positions_matrix) {
-
   prices <- common_prices %>%
     purrr::map("close") %>%
     dplyr::bind_cols() %>%

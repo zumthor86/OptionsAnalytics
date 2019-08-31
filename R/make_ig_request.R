@@ -9,7 +9,6 @@
 #'
 #' @examples
 make_ig_request <- function(path, api_version, query = NULL) {
-
   request_url <- httr::modify_url(
     url = glue::glue("https://{Sys.getenv('SESSION_IG_HOST')}"),
     path = file.path("gateway", "deal", path),

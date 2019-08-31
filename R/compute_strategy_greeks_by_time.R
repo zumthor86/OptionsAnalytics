@@ -10,7 +10,6 @@
 #'
 #' @examples
 compute_strategy_greeks_by_time <- function(epics, underlyer_prices, underlyer_datetimes, positions) {
-
   greeks <- epics %>%
     purrr::map(get_option_details) %>%
     purrr::map(~ greeks_by_time(
@@ -27,6 +26,4 @@ compute_strategy_greeks_by_time <- function(epics, underlyer_prices, underlyer_d
     dplyr::as_data_frame()
 
   dplyr::bind_cols(date_time = underlyer_datetimes, greeks)
-
-
 }
