@@ -2,12 +2,12 @@
 
 export("%>%")
 export(analyze_options_position)
+export(compute_option_scenarios)
 export(compute_strategy_greeks_by_time)
 export(compute_strategy_prices)
 export(compute_ttm_years)
 export(create_nodes_list)
 export(get_greeks)
-export(get_index_realized_volatility)
 export(get_option_underlyer)
 export(greeks_by_time)
 export(initiate_ig_session)

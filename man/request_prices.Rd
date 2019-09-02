@@ -5,7 +5,7 @@
 \title{Request historical prices}
 \usage{
 request_prices(epic = "IX.D.SPTRD.DAILY.IP", resolution = "HOUR",
-  n_prices = 100)
+  n_prices = 5)
 }
 \arguments{
 \item{epic}{Instrument ID}

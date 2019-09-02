@@ -4,12 +4,12 @@
 \alias{iv_by_time}
 \title{Compute Implied Volatility over time}
 \usage{
-iv_by_time(underlying_prices, option_prices, strike, option_type = "C")
+iv_by_time(underlying_prices, option_prices, option_datetimes, epic)
 }
 \arguments{
 \item{underlying_prices}{Close prices of the option's underlying}
 
-\item{option_prices}{Close prices of the option itself}
+\item{option_prices}{Dataframe consisting of close prices and date time of the option}
 
 \item{strike}{Option strike price}
 
