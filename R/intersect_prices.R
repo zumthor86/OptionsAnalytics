@@ -13,7 +13,7 @@ intersect_prices <- function(prices) {
     purrr::reduce(intersect) %>%
     lubridate::as_datetime()
 
-  if (is.empty(common_idx)) warning("No common datetimes found in prices")
+  if (length(common_idx)==0) warning("No common datetimes found in prices")
 
   purrr::map(prices, ~ dplyr::filter(., .data$date_time %in% common_idx))
 }

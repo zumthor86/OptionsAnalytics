@@ -41,29 +41,38 @@ plot_strategy_prices <- function(epics, positions, resolution, n_prices) {
     plotly::add_lines(y = ~gamma, name = "gamma", color = I(greeks_colors[[3]])) %>%
     plotly::add_lines(y = ~theta, name = "theta", color = I(greeks_colors[[4]])) %>%
     plotly::layout(
-      xaxis = list("type" = "category", "title" = "DateTime", color = "white", "zeroline" = T, showline = T),
-      yaxis = list("zeroline" = T, showline = T, "title" = "Exposures", color = "white")
+      xaxis = list("type" = "category", "title" = "DateTime", color = "white"),
+      yaxis = list("title" = "Exposures", color = "white")
     )
 
   underlyer_plot <- plotly::plot_ly(common_prices$underlyer, x = ~date_time) %>%
     plotly::add_lines(y = ~close, name = "underlyer", color = I("white")) %>%
     plotly::layout(
-      yaxis = list("zeroline" = T, showline = T, "title" = "Price", color = "white"),
+      yaxis = list("title" = "Price", color = "white"),
       xaxis = list("type" = "category")
     )
 
   strategy_plot <- plotly::plot_ly(strategy_prices) %>%
     plotly::add_lines(x = ~date_time, y = ~close, name = "strategy") %>%
     plotly::layout(
-      yaxis = list("zeroline" = T, showline = T, "title" = "Price", color = "white"),
+      yaxis = list("title" = "Price", color = "white"),
       xaxis = list("type" = "category")
     )
 
   legend_style <- list(
-    font = list(
-      family = "sans-serif",
-      size = 12,
-      color = "white"
+    "font" = list(
+      "family" = "sans-serif",
+      "size" = 12,
+      "color" = "white"
+    )
+  )
+
+  plot_title <- list(
+    "text" = "Strategy Prices",
+    "font" = list(
+      "family" = "sans-serif",
+      "size" = 16,
+      "color" = "white"
     )
   )
 
@@ -71,7 +80,7 @@ plot_strategy_prices <- function(epics, positions, resolution, n_prices) {
     plotly::layout(
       plot_bgcolor = "#252525",
       paper_bgcolor = "#252525",
-      xaxis = list("showticklabels" = F),
-      legend = legend_style
+      xaxis = list("showticklabels" = F, showline = F),
+      legend = legend_style, title = plot_title
     )
 }

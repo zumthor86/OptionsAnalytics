@@ -46,6 +46,7 @@ compute_option_scenarios <- function(epic,
     data = option_scenarios$price,
     nrow = length(underlyer_space),
     ncol = length(volatility_space),
-    byrow = TRUE
+    byrow = TRUE,
+    dimnames = list(underlyer_space, volatility_space)
   )
 }
