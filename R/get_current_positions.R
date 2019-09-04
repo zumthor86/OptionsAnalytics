@@ -18,7 +18,8 @@ get_current_positions <- function(){
 
   expiry <- pos$positions %>% purrr::map_chr(list("market", "expiry"))
 
-  tibble::tibble(epic, opening_price, size, direction, expiry)
+  tibble::tibble(epic, opening_price, size, direction, expiry) %>%
+    purrr::modify_at("direction", ~ifelse(.=="BUY", 1, -1))
 
 }
 

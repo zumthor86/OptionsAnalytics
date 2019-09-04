@@ -20,7 +20,8 @@
 request_prices <-
   function(epic = "IX.D.SPTRD.DAILY.IP",
              resolution = "HOUR",
-             n_prices = 5) {
+             n_prices = 5,
+             price_type = "bid") {
     assertthat::assert_that(is.numeric(n_prices), msg = "n_prices must be an integer")
 
     allowable_resolutions <- c(
@@ -52,7 +53,7 @@ request_prices <-
       "lowPrice"
     )
 
-    prices <- purrr::map_depth(prcs$prices, 2, ~ pluck(., "bid", .default = 0)) %>%
+    prices <- purrr::map_depth(prcs$prices, 2, ~ pluck(., price_type, .default = 0)) %>%
       dplyr::bind_rows() %>%
       dplyr::select(dplyr::one_of(price_names))
 

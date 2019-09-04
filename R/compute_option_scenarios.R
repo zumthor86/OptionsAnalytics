@@ -37,7 +37,9 @@ compute_option_scenarios <- function(epic,
 
   underlyer_space <- underlyer_price * seq(underlyer_min, underlyer_max, length.out = n_scenarios)
 
-  volatility_space <- vol$implied_vol * seq(vol_min, vol_max, length.out = n_scenarios)
+  volatility_span <- seq(vol_min, vol_max, length.out = n_scenarios)
+
+  volatility_space <- vol$implied_vol * volatility_span
 
   option_scenarios <- purrr::cross_df(list("vol" = volatility_space, "underlyer" = underlyer_space)) %>%
     dplyr::mutate(price = purrr::map2_dbl(vol, underlyer, ~ partial_options(S = .y, sigma = .x) %>% slot("price")))
@@ -47,6 +49,6 @@ compute_option_scenarios <- function(epic,
     nrow = length(underlyer_space),
     ncol = length(volatility_space),
     byrow = TRUE,
-    dimnames = list(underlyer_space, volatility_space)
+    dimnames = list(underlyer_space, volatility_span)
   )
 }

@@ -21,12 +21,13 @@ plot_scenario_surface <- function(scenario_matrix) {
     )
   )
 
+  breakeven <- matrix(data = 0,nrow = nrow(scenario_matrix), ncol = ncol(scenario_matrix))
 
-  plotly::plot_ly() %>%
+  plotly::plot_ly(showscale=FALSE) %>%
     plotly::add_surface(
       x = ~ colnames(scenario_matrix),
       y = ~ rownames(scenario_matrix),
-      z = ~scenario_matrix, name = "Scenarios",
+      z = ~ scenario_matrix, name = "Scenarios",
       hovertemplate = paste0("Volatility: %{x}<br>Underlyer: %{y}<br>Price: %{z}")
     ) %>%
     plotly::layout(
@@ -38,5 +39,11 @@ plot_scenario_surface <- function(scenario_matrix) {
       legend = legend_style,
       plot_bgcolor = "#252525",
       paper_bgcolor = "#252525"
-    )
+    ) %>%
+    plotly::add_surface(x = ~ colnames(scenario_matrix),
+                        y = ~ rownames(scenario_matrix),
+                        z = ~ breakeven,
+                        hoverinfo = "none",
+                        color = I("white"),
+                        opacity = 0.5)
 }
