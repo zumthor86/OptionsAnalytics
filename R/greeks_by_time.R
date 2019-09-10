@@ -10,18 +10,17 @@
 #' @export
 #'
 #' @examples
-greeks_by_time <- function(underlyer_prices,
-                           underlyer_datetimes,
-                           strike_price,
-                           option_type,
-                           expiry) {
+greeks_by_time <- function(option_leg,
+                           underlyer_prices,
+                           underlyer_datetimes
+                           ) {
   partial_greeks <- purrr::partial(get_greeks,
-    strike_price = strike_price,
-    option_type = option_type
+    strike_price = option_leg$strike_price,
+    option_type = option_leg$option_type
   )
 
 
-  time_to_mat <- compute_ttm_years(underlyer_datetimes, expiry)
+  time_to_mat <- compute_ttm_years(underlyer_datetimes, option_leg$expiry)
 
   purrr::map2(
     underlyer_prices,
