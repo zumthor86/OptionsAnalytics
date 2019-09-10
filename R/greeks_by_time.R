@@ -1,4 +1,4 @@
-#' Compute an options greeks over time for single option
+#' Compute greeks over time for single option
 #'
 #' @param underlyer_prices Numeric vector containing option underlyer prices
 #' @param underlyer_datetimes DateTime vector of the option underlyer prices

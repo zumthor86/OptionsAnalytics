@@ -16,6 +16,7 @@ get_option_underlyer <- function(epic) {
     "SPX2" = "IX.D.SPTRD.DAILY.IP",
     "SPX3" = "IX.D.SPTRD.DAILY.IP",
     "SPX4" = "IX.D.SPTRD.DAILY.IP",
+    "SPX5" = "IX.D.SPTRD.DAILY.IP",
     "DSPX" = "IX.D.SPTRD.DAILY.IP",
     "SPXWEEK" = "IX.D.SPTRD.DAILY.IP",
     "EURUSD" = "CS.D.EURUSD.TODAY.IP"
