@@ -3,7 +3,7 @@
 #' @param ... Dataframes containing time series observations
 #'
 #' @return Input dataframes with common time series to all input dataframes
-#' @export
+#'
 #'
 #' @importFrom purrr reduce
 #'

@@ -2,10 +2,9 @@
 % Please edit documentation in R/greeks_by_time.R
 \name{greeks_by_time}
 \alias{greeks_by_time}
-\title{Compute an options greeks over time for single option}
+\title{Compute greeks over time for single option}
 \usage{
-greeks_by_time(underlyer_prices, underlyer_datetimes, strike_price,
-  option_type, expiry)
+greeks_by_time(option_leg, underlyer_prices, underlyer_datetimes)
 }
 \arguments{
 \item{underlyer_prices}{Numeric vector containing option underlyer prices}
@@ -22,5 +21,5 @@ greeks_by_time(underlyer_prices, underlyer_datetimes, strike_price,
 List of option greeks for each underlyer price
 }
 \description{
-Compute an options greeks over time for single option
+Compute greeks over time for single option
 }

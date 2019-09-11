@@ -4,7 +4,7 @@
 \alias{get_greeks}
 \title{Compute greeks for an option}
 \usage{
-get_greeks(r = 0.05, b = 0, underlyer_annual_vol = 0.075,
+get_greeks(r = 0.05, b = 0.05, underlyer_annual_vol = 0.115,
   exposure = 1, time_to_mat, strike_price, underlyer_price, option_type,
   greek_selections = c("delta", "gamma", "vega", "theta"))
 }

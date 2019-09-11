@@ -2,20 +2,16 @@
 % Please edit documentation in R/compute_strategy_prices.R
 \name{compute_strategy_prices}
 \alias{compute_strategy_prices}
-\title{Create options matrix of prices from epics}
+\title{Compute strategy prices}
 \usage{
-compute_strategy_prices(common_prices, positions_matrix)
+compute_strategy_prices(strategy)
 }
 \arguments{
-\item{epics}{List of epics}
-
-\item{resolution}{Price resolution, eg. MINUTE_5, HOUR}
-
-\item{n_prices}{Number of prices to request}
+\item{strategy}{Strategy object}
 }
 \value{
-Matrix of dimension (n_prices, n_options)
+Dataframe of strategy prices
 }
 \description{
-Create options matrix of prices from epics
+Compute strategy prices
 }

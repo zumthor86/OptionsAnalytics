@@ -4,13 +4,10 @@
 \alias{compute_strategy_greeks_by_time}
 \title{Compute options strategy greeks by time}
 \usage{
-compute_strategy_greeks_by_time(epics, underlyer_prices,
-  underlyer_datetimes, positions)
+compute_strategy_greeks_by_time(strategy)
 }
 \arguments{
-\item{epics}{List of instrument epics}
-
-\item{positions}{Vector containing position for each option in the strategy}
+\item{strategy}{Option strategy object}
 
 \item{resolution}{Resolution of prices}
 

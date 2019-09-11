@@ -1,23 +1,22 @@
-#' Create options matrix of prices from epics
+#' Compute strategy prices
 #'
-#' @param epics List of epics
-#' @param resolution Price resolution, eg. MINUTE_5, HOUR
-#' @param n_prices Number of prices to request
+#' @param strategy Strategy object
 #'
-#' @return Matrix of dimension (n_prices, n_options)
+#' @return Dataframe of strategy prices
 #' @export
 #'
 #' @examples
-compute_strategy_prices <- function(common_prices, positions_matrix) {
-  prices <- common_prices %>%
-    purrr::map("close") %>%
-    dplyr::bind_cols() %>%
-    as.matrix()
+compute_strategy_prices <- function(strategy){
 
-  strategy_prices <- prices %*% positions_matrix
+  prices <- purrr::map(strategy$legs, "prices")
 
-  tibble::tibble(
-    date_time = common_prices[[1]]$date_time,
-    close = strategy_prices
-  )
+  prices[['underlyer']] <- strategy$underlyer_prices
+
+  common_prices <- intersect_prices(prices)
+
+  positions_matrix <- purrr::map_dbl(strategy$legs, "position") %>%
+    matrix(nrow = length(strategy$legs))
+
+  calc_strategy_prices(common_prices[1:attr(strategy, "n_legs")], positions_matrix)
+
 }
