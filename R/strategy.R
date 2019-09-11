@@ -4,6 +4,7 @@ new_option_leg <- function(strike_price=numeric(),
                            underlyer = character(),
                            size = double(),
                            position = double(),
+                           prices = tibble::tibble(),
                            epic = character()
 ){
 
@@ -13,14 +14,17 @@ new_option_leg <- function(strike_price=numeric(),
                  "option_type" = option_type,
                  "underlyer" = underlyer,
                  "position" = position,
+                 "prices" = prices,
                  "epic" = epic),
             class = "option_leg")
 
 }
 
-new_option_strategy <- function(legs=list()){
+new_option_strategy <- function(legs=list(),
+                                underlyer_prices = tibble::tibble()){
 
-  structure(legs,
+  structure(list("legs" = legs,
+                 "underlyer_prices" = underlyer_prices),
             n_legs = length(legs),
             class = "option_strategy")
 
@@ -45,18 +49,6 @@ print.option_strategy <- function(option_strategy){
 
 }
 
-
-all_mkts <- all_mkts %>%
-  dplyr::select(epic, expiry, instrumentName) %>%
-  dplyr::mutate(instrumentName = paste(.data$expiry, .data$instrumentName, sep = " "))
-
-all_mkt_epics <- all_mkts$epic
-
-all_mkt_epics <- set_names(all_mkt_epics, all_mkts$instrumentName)
-
-epic_env <- rlang::as_environment(all_mkt_epics)
-
-
 select_legs <- function(env, ...){
 
   legs <- rlang::enexprs(...)
@@ -65,25 +57,31 @@ select_legs <- function(env, ...){
 
 }
 
-option_leg <- function(epic, position){
+option_leg <- function(epic, position, resolution, n_prices){
 
   details <- get_option_details(epic)
 
   underlyer <- get_option_underlyer(epic)[[1]]
+
+  prices <- request_prices(epic, resolution, n_prices)
 
   new_option_leg(strike_price = details$strike_price,
                  expiry = details$expiry_datetime,
                  option_type = details$option_type,
                  underlyer = underlyer,
                  position = position,
+                 prices = prices,
                  epic = epic
   )
 
 }
 
-create_strategy <- function(epics, positions){
+create_strategy <- function(epics, positions, resolution, n_prices){
 
-  purrr::map2(epics, positions, option_leg) %>%
-    new_option_strategy()
+  legs <- purrr::map2(epics, positions, option_leg, resolution, n_prices)
+
+  underlyer_epic <- legs[[1]]$underlyer
+
+  new_option_strategy(legs, request_prices(underlyer_epic, resolution, n_prices))
 
 }

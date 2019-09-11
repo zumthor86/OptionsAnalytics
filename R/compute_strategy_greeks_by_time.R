@@ -8,18 +8,14 @@
 #' @export
 #'
 #' @examples
-compute_strategy_greeks_by_time <- function(strategy, resolution, n_prices) {
-  underlyer_data <- request_prices(strategy[[1]]$underlyer,
-    resolution = resolution,
-    n_prices = n_prices
-  )
+compute_strategy_greeks_by_time <- function(strategy) {
 
-  positions <- purrr::map_dbl(strategy, "position")
+  positions <- purrr::map_dbl(strategy$legs, "position")
 
-  greeks <- purrr::map(strategy,
+  greeks <- purrr::map(strategy$legs,
     greeks_by_time,
-    underlyer_prices = underlyer_data$close,
-    underlyer_datetimes = underlyer_data$date_time
+    underlyer_prices = strategy$underlyer_prices$close,
+    underlyer_datetimes = strategy$underlyer_prices$date_time
   ) %>%
     purrr::map(~ dplyr::bind_rows(.) %>%
       as.matrix()) %>%
