@@ -4,16 +4,14 @@
 \alias{compute_option_scenarios}
 \title{Compute option price scenarios at a given point in time}
 \usage{
-compute_option_scenarios(epic, underlyer_price, scenario_datetime,
+compute_option_scenarios(option_leg, scenario_datetime,
   underlyer_min = 0.9, underlyer_max = 1.1, vol_min = 0.7,
   vol_max = 1.3, n_scenarios = 20)
 }
 \arguments{
-\item{epic}{Option epic}
-
-\item{underlyer_price}{Option underlyers price}
-
 \item{scenario_datetime}{Datetime at which to compute option price scenarios}
+
+\item{n_scenarios}{}
 }
 \value{
 Matrix of option prices for different underlyer prices and volatility

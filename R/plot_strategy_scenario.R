@@ -7,12 +7,18 @@
 #' @export
 #'
 #' @examples
-plot_strategy_scenario <- function(epics, scenario_datetime) {
-  underlyer <- request_prices(epic = get_option_underlyer(epics[1]), resolution = "MINUTE", n_prices = 1)
+plot_strategy_scenario <- function(strategy, scenario_datetime) {
 
-  options_scenarios <- purrr::map(epics, ~ OptionsAnalytics::compute_option_scenarios(., underlyer$close, scenario_datetime))
+  option_scenarios <- purrr::map(strategy$legs,
+                                compute_option_scenarios,
+                                scenario_datetime,
+                                strategy$underlyer_prices$close)
+
+  options_positions <- purrr::map_dbl(strategy$legs, "position")
+
+  options_scenarios <- purrr::map2(option_scenarios, options_positions, ~ .x*.y)
 
   strategy_scenarios <- purrr::reduce(options_scenarios, `+`)
 
-  OptionsAnalytics::plot_scenario_surface(strategy_scenarios)
+  plot_scenario_surface(strategy_scenarios)
 }

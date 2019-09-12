@@ -12,6 +12,9 @@ compute_implied_volatility <- function(
                        underlying_prices
                        ) {
 
+  assertthat::assert_that(length(option_leg$prices$close) == length(underlying_prices),
+                          msg = "Underlyer prices must have same length as option prices")
+
   implied_vol <- purrr::partial(
     .f = fOptions::GBSVolatility,
     TypeFlag = tolower(option_leg$option_type),
