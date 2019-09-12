@@ -78,6 +78,9 @@ option_leg <- function(epic, position, resolution, n_prices){
 
 create_strategy <- function(epics, positions, resolution, n_prices){
 
+  assertthat::assert_that(length(epics) == length(positions),
+                          msg = "Number of epics and positions should be equal")
+
   legs <- purrr::map2(epics, positions, option_leg, resolution, n_prices)
 
   underlyer_epic <- legs[[1]]$underlyer
@@ -85,3 +88,12 @@ create_strategy <- function(epics, positions, resolution, n_prices){
   new_option_strategy(legs, request_prices(underlyer_epic, resolution, n_prices))
 
 }
+
+
+
+
+
+
+
+
+
