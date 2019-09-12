@@ -15,7 +15,7 @@ compute_strategy_prices <- function(strategy){
   common_prices <- intersect_prices(prices)
 
   positions_matrix <- purrr::map_dbl(strategy$legs, "position") %>%
-    matrix(nrow = length(strategy$legs))
+    matrix(nrow = attr(strategy, "n_legs"))
 
   calc_strategy_prices(common_prices[1:attr(strategy, "n_legs")], positions_matrix)
 
