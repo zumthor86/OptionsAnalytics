@@ -3,6 +3,9 @@
 #' @return Summary dataframe of open positions
 #' @export
 #'
+#' @importFrom tibble tibble
+#' @importFrom purrr modify_at
+#' @importFrom purrr map_chr
 #' @examples
 get_current_positions <- function(){
 
