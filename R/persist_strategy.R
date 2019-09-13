@@ -8,6 +8,7 @@
 #' @importFrom purrr modify_in
 #' @importFrom jsonlite read_json
 #' @importFrom purrr modify
+#' @importFrom lubridate as_datetime
 #'
 #' @examples
 load_strategy <- function(path) {
