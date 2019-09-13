@@ -5,7 +5,8 @@
 #'
 #' @return Dataframe of implied_volatility
 #' @export
-#'
+#' @importFrom fOptions GBSVolatility
+#' @importFrom purrr pmap_dbl
 #' @examples
 compute_implied_volatility <- function(
                        option_leg,
