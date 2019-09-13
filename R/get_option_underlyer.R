@@ -4,7 +4,7 @@
 #'
 #' @return Option underlyer
 #' @export
-#'
+#' @importFrom stringr str_extract
 #' @examples
 get_option_underlyer <- function(epic) {
   underlyer <- stringr::str_extract(epic, "(?<=\\.D\\.).*(?=\\.\\d)")
