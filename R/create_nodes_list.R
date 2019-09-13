@@ -4,7 +4,7 @@
 #'
 #' @return Named list where the node_ids constitute the values
 #' @export
-#'
+#' @importFrom purrr set_names
 #' @examples
 create_nodes_list <- function(node_id, recursive = FALSE) {
   if (!recursive) {
