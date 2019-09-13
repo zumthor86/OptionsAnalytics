@@ -8,6 +8,7 @@
 #'
 #' @return List of option greeks for each underlyer price
 #' @export
+#' @importFrom purrr map2
 #'
 #' @examples
 greeks_by_time <- function(option_leg,
