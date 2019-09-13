@@ -43,8 +43,8 @@ compute_option_scenarios <- function(option_leg,
 
   matrix(
     data = option_scenarios$price,
-    nrow = length(underlyer_space),
-    ncol = length(volatility_space),
+    nrow = n_scenarios,
+    ncol = n_scenarios,
     byrow = TRUE,
     dimnames = list(underlyer_space, volatility_span)
   )
