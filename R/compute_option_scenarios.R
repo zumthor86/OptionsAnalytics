@@ -11,6 +11,11 @@
 #' @return Matrix of option prices for different underlyer prices and volatility
 #' @export
 #'
+#' @importFrom purrr partial
+#' @importFrom fOptions GBSOption
+#' @importFrom purrr cross_df
+#' @importFrom purrr map2_dbl
+#' @importFrom dplyr mutate
 #' @examples
 compute_option_scenarios <- function(option_leg,
                                      scenario_datetime,
