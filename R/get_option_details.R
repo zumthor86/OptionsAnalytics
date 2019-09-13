@@ -1,3 +1,5 @@
+# TODO: Document
+
 get_option_details <- function(epic) {
   response <- make_ig_request(
     path = file.path(
