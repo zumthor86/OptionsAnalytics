@@ -4,7 +4,9 @@
 #'
 #' @return List of session information in global environment
 #' @export
-#'
+#' @importFrom glue glue
+#' @importFrom httr add_headers
+#' @importFrom httr POST
 #' @examples
 initiate_ig_session <- function(env = "LIVE") {
   if (env == "LIVE") {
