@@ -23,5 +23,5 @@ compute_strategy_greeks_by_time <- function(strategy) {
     purrr::reduce(.f = `+`) %>%
     dplyr::as_tibble()
 
-  dplyr::bind_cols(date_time = underlyer_data$date_time, greeks)
+  dplyr::bind_cols(date_time = strategy$underlyer_prices$date_time, greeks)
 }

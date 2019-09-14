@@ -4,7 +4,7 @@
 \alias{compute_option_scenarios}
 \title{Compute option price scenarios at a given point in time}
 \usage{
-compute_option_scenarios(option_leg, scenario_datetime,
+compute_option_scenarios(option_leg, scenario_datetime, underlyer_prices,
   underlyer_min = 0.9, underlyer_max = 1.1, vol_min = 0.7,
   vol_max = 1.3, n_scenarios = 20)
 }

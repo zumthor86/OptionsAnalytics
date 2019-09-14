@@ -1,13 +1,21 @@
-new_option_leg <- function(strike_price=numeric(),
-                           expiry = character(),
+new_option_leg <- function(strike_price=double(),
+                           expiry = double(),
                            option_type = character(),
                            underlyer = character(),
-                           size = double(),
                            position = double(),
                            prices = tibble::tibble(),
                            epic = character()
 ){
 
+  assertthat::assert_that(purrr::every(list(strike_price,
+                                            position),
+                                       is.double),
+                          purrr::every(list(option_type,
+                                            underlyer,
+                                            epic),
+                                      is.character),
+                          is.data.frame(prices),
+                          lubridate::is.POSIXct(expiry))
 
   structure(list("strike_price" = strike_price,
                  "expiry" = expiry,
@@ -22,6 +30,10 @@ new_option_leg <- function(strike_price=numeric(),
 
 new_option_strategy <- function(legs=list(),
                                 underlyer_prices = tibble::tibble()){
+
+  assertthat::assert_that(is.list(legs),
+                          is.data.frame(underlyer_prices),
+                          purrr::every(legs, inherits, what = "option_leg"))
 
   structure(list("legs" = legs,
                  "underlyer_prices" = underlyer_prices),

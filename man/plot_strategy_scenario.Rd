@@ -4,12 +4,12 @@
 \alias{plot_strategy_scenario}
 \title{Plot strategy scenarios}
 \usage{
-plot_strategy_scenario(epics, scenario_datetime)
+plot_strategy_scenario(strategy, scenario_datetime)
 }
 \arguments{
-\item{epics}{List of epics}
-
 \item{scenario_datetime}{Datetime at which to evaluate scenarios}
+
+\item{epics}{List of epics}
 }
 \description{
 Plot strategy scenarios
