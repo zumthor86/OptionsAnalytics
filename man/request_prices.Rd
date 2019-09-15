@@ -13,6 +13,8 @@ request_prices(epic = "IX.D.SPTRD.DAILY.IP", resolution = "HOUR",
 \item{resolution}{Time interval of prices eg. "HOUR", "DAY", "MINUTE_15"}
 
 \item{n_prices}{Number of prices to request}
+
+\item{price_type}{"bid" or "ask"}
 }
 \value{
 Dataframe of historical prices

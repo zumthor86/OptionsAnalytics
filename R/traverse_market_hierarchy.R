@@ -10,6 +10,7 @@
 traverse_market_hierarchy <- function(node_id, pause = 0) {
   slow_mkt_nav <- slowExec(pause, request_market_navigation)
 
+
   results <- slow_mkt_nav(node_id)
 
   ids <- results$nodes %>%
@@ -18,7 +19,8 @@ traverse_market_hierarchy <- function(node_id, pause = 0) {
   if (!is.null(results$markets)) {
     return(dplyr::bind_rows(results$markets))
   } else {
-    all_mkts <- purrr::map_df(ids, traverse_market_hierarchy)
+    all_mkts <- purrr::map_df(ids, traverse_market_hierarchy, pause = pause)
+
 
     return(all_mkts)
   }

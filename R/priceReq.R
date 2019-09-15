@@ -3,6 +3,7 @@
 #' @param epic Instrument ID
 #' @param resolution Time interval of prices eg. "HOUR", "DAY", "MINUTE_15"
 #' @param n_prices Number of prices to request
+#' @param price_type "bid" or "ask"
 #'
 #' @return Dataframe of historical prices
 #' @export

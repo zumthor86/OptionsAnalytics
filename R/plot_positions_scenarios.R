@@ -12,7 +12,7 @@
 #' @examples
 plot_positions_scenarios <- function(epics, opening_prices, directions, sizes, scenario_datetime) {
   underlyer_price <- request_prices(get_option_underlyer(positions$epic[1]), resolution = "MINUTE", n_prices = 1)$close
-# TODO refactor to use strategy objec
+  # TODO refactor to use strategy objec
   options_scenarios <- purrr::map(positions$epic, ~ compute_option_scenarios(., underlyer_price, scenario_datetime))
 
   pnl_scen <- purrr::pmap(

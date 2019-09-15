@@ -7,7 +7,7 @@
 initiate_ig_session(env = "LIVE")
 }
 \arguments{
-\item{key}{Name of api key environment variable}
+\item{env}{Which enviroment to use, one of "LIVE" or "DEMO"}
 }
 \value{
 List of session information in global environment

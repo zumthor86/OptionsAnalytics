@@ -16,6 +16,8 @@
 #' @importFrom purrr cross_df
 #' @importFrom purrr map2_dbl
 #' @importFrom dplyr mutate
+#' @importFrom utils tail
+#' @importFrom rlang .data
 #' @examples
 compute_option_scenarios <- function(option_leg,
                                      scenario_datetime,
@@ -25,7 +27,6 @@ compute_option_scenarios <- function(option_leg,
                                      vol_min = 0.7,
                                      vol_max = 1.3,
                                      n_scenarios = 20) {
-
   time_to_mat <- compute_ttm_years(scenario_datetime, expiry = option_leg$expiry)
 
   current_vol <- compute_implied_volatility(option_leg, underlyer_prices)
@@ -37,14 +38,14 @@ compute_option_scenarios <- function(option_leg,
     r = 0.05, b = 0.05
   )
 
-  underlyer_space <- tail(underlyer_prices,1) * seq(underlyer_min, underlyer_max, length.out = n_scenarios)
+  underlyer_space <- utils::tail(underlyer_prices, 1) * seq(underlyer_min, underlyer_max, length.out = n_scenarios)
 
   volatility_span <- seq(vol_min, vol_max, length.out = n_scenarios)
 
-  volatility_space <- tail(current_vol$implied_vol,1) * volatility_span
+  volatility_space <- utils::tail(current_vol$implied_vol, 1) * volatility_span
 
   option_scenarios <- purrr::cross_df(list("vol" = volatility_space, "underlyer" = underlyer_space)) %>%
-    dplyr::mutate(price = purrr::map2_dbl(vol, underlyer, ~ partial_options(S = .y, sigma = .x) %>% slot("price")))
+    dplyr::mutate(price = purrr::map2_dbl(.data$vol, .data$underlyer, ~ partial_options(S = .y, sigma = .x) %>% slot("price")))
 
   matrix(
     data = option_scenarios$price,

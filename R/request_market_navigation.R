@@ -6,9 +6,9 @@
 #' @export
 #'
 #' @examples
-#' /dontrun{
+#' \dontrun{
 #'
-#' request_market_navigation <- function(346003)
+#' request_market_navigation <- function(node_id = 346003)
 #'
 #' }
 request_market_navigation <- function(node_id){

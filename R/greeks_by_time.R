@@ -1,10 +1,8 @@
 #' Compute greeks over time for single option
 #'
 #' @param underlyer_prices Numeric vector containing option underlyer prices
+#' @param option_leg Option leg object
 #' @param underlyer_datetimes DateTime vector of the option underlyer prices
-#' @param strike_price Option strike
-#' @param option_type Option type
-#' @param expiry Option expiry
 #'
 #' @return List of option greeks for each underlyer price
 #' @export
@@ -13,8 +11,7 @@
 #' @examples
 greeks_by_time <- function(option_leg,
                            underlyer_prices,
-                           underlyer_datetimes
-                           ) {
+                           underlyer_datetimes) {
   partial_greeks <- purrr::partial(get_greeks,
     strike_price = option_leg$strike_price,
     option_type = option_leg$option_type

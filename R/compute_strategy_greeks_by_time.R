@@ -1,15 +1,12 @@
 #' Compute options strategy greeks by time
 #'
-#' @param resolution Resolution of prices
 #' @param strategy Option strategy object
-#' @param n_prices Number of prices
 #'
 #' @return Dataframe of greeks
 #' @export
 #'
 #' @examples
-compute_strategy_greeks_by_time <- function(strategy) {
-
+compute_strategy_greeks <- function(strategy) {
   positions <- purrr::map_dbl(strategy$legs, "position")
 
   greeks <- purrr::map(strategy$legs,

@@ -4,7 +4,7 @@ Title: Provides advanced options strategies analytics
 Version: 0.1.0
 Author: Christopher Sumter
 Maintainer: The package maintainer <csumter1165@gmail.com>
-Description: This package allows one to aggregate options greeks at the strategy level and plot these exposures over time 
+Description: This package allows one to aggregate options greeks at the strategy level and plot these exposures over time. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -17,7 +17,10 @@ Imports:
     stringr,
     magrittr,
     assertthat,
-    lubridate
+    lubridate,
+    jsonlite,
+    tibble,
+    rlang
 URL: https://github.com/zumthor86/OptionsAnalytics
 BugReports: https://github.com/zumthor86/OptionsAnalytics/issues
 Suggests: 

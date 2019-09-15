@@ -9,11 +9,11 @@
 #'
 #' @examples
 intersect_prices <- function(prices) {
-  common_idx <- map(prices, "date_time") %>%
+  common_idx <- purrr::map(prices, "date_time") %>%
     purrr::reduce(intersect) %>%
     lubridate::as_datetime()
 
-  if (length(common_idx)==0) warning("No common datetimes found in prices")
+  if (length(common_idx) == 0) warning("No common datetimes found in prices")
 
   purrr::map(prices, ~ dplyr::filter(., .data$date_time %in% common_idx))
 }

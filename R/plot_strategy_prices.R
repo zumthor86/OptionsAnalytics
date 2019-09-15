@@ -26,7 +26,7 @@ plot_strategy_prices <- function(epics, positions, resolution, n_prices) {
 
   strategy_prices <- OptionsAnalytics::compute_strategy_prices(common_prices[1:length(positions)], position_matrix)
 
-  strategy_greeks <- OptionsAnalytics::compute_strategy_greeks_by_time(
+  strategy_greeks <- OptionsAnalytics::compute_strategy_greeks(
     epics = epics[1:length(positions)],
     underlyer_prices = common_prices$underlyer$close,
     underlyer_datetimes = common_prices$underlyer$date_time,

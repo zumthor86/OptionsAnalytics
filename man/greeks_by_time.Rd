@@ -7,15 +7,11 @@
 greeks_by_time(option_leg, underlyer_prices, underlyer_datetimes)
 }
 \arguments{
+\item{option_leg}{Option leg object}
+
 \item{underlyer_prices}{Numeric vector containing option underlyer prices}
 
 \item{underlyer_datetimes}{DateTime vector of the option underlyer prices}
-
-\item{strike_price}{Option strike}
-
-\item{option_type}{Option type}
-
-\item{expiry}{Option expiry}
 }
 \value{
 List of option greeks for each underlyer price

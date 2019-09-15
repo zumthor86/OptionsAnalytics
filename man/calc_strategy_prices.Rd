@@ -7,7 +7,9 @@
 calc_strategy_prices(common_prices, positions_matrix)
 }
 \arguments{
-\item{positions_matrix}{}
+\item{common_prices}{List of prices spanning same timeframe}
+
+\item{positions_matrix}{Matrix containing options positions}
 }
 \value{
 Dataframe of strategy prices

@@ -9,12 +9,11 @@
 #' @importFrom purrr pmap_dbl
 #' @examples
 compute_implied_volatility <- function(
-                       option_leg,
-                       underlying_prices
-                       ) {
-
+                                       option_leg,
+                                       underlying_prices) {
   assertthat::assert_that(length(option_leg$prices$close) == length(underlying_prices),
-                          msg = "Underlyer prices must have same length as option prices")
+    msg = "Underlyer prices must have same length as option prices"
+  )
 
   implied_vol <- purrr::partial(
     .f = fOptions::GBSVolatility,

@@ -1,6 +1,6 @@
 #' Initiate IG Session
 #'
-#' @param key Name of api key environment variable
+#' @param env Which enviroment to use, one of "LIVE" or "DEMO"
 #'
 #' @return List of session information in global environment
 #' @export
