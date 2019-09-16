@@ -4,16 +4,10 @@
 \alias{plot_strategy_prices}
 \title{Generate plot of options exposures}
 \usage{
-plot_strategy_prices(epics, positions, resolution, n_prices)
+plot_strategy_prices(strategy)
 }
 \arguments{
-\item{epics}{List of options epics}
-
-\item{positions}{List of options positions, i.e. -1 for short one contract, +2 for long two contracts}
-
-\item{resolution}{Plot resolution}
-
-\item{n_prices}{Number of prices}
+\item{strategy}{Strategy object}
 }
 \value{
 plotly object

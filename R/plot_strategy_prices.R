@@ -1,37 +1,22 @@
 #' Generate plot of options exposures
 #'
-#' @param epics List of options epics
-#' @param positions List of options positions, i.e. -1 for short one contract, +2 for long two contracts
-#' @param resolution Plot resolution
-#' @param n_prices Number of prices
+#' @param strategy Strategy object
 #'
 #' @return plotly object
 #' @export
 #'
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom plotly plot_ly
+#' @importFrom plotly add_lines
+#' @importFrom plotly layout
+#' @importFrom plotly subplot
+#'
 #' @examples
-plot_strategy_prices <- function(epics, positions, resolution, n_prices) {
-  underlyer_epic <- OptionsAnalytics::get_option_underlyer(epics[[1]])
+plot_strategy_prices <- function(strategy) {
 
-  epics["underlyer"] <- underlyer_epic
+  strategy_prices <- compute_strategy_prices(strategy)
 
-  position_matrix <- matrix(positions,
-    nrow = length(positions)
-  )
-
-  common_prices <- purrr::map(epics, ~ OptionsAnalytics::request_prices(.,
-    resolution = resolution,
-    n_prices = n_prices
-  )) %>%
-    OptionsAnalytics::intersect_prices()
-
-  strategy_prices <- OptionsAnalytics::compute_strategy_prices(common_prices[1:length(positions)], position_matrix)
-
-  strategy_greeks <- OptionsAnalytics::compute_strategy_greeks(
-    epics = epics[1:length(positions)],
-    underlyer_prices = common_prices$underlyer$close,
-    underlyer_datetimes = common_prices$underlyer$date_time,
-    positions = positions
-  )
+  strategy_greeks <- compute_strategy_greeks(strategy)
 
   greeks_colors <- RColorBrewer::brewer.pal(n = 4, name = "YlOrRd")
 
@@ -45,7 +30,7 @@ plot_strategy_prices <- function(epics, positions, resolution, n_prices) {
       yaxis = list("title" = "Exposures", color = "white")
     )
 
-  underlyer_plot <- plotly::plot_ly(common_prices$underlyer, x = ~date_time) %>%
+  underlyer_plot <- plotly::plot_ly(strategy$underlyer_prices, x = ~date_time) %>%
     plotly::add_lines(y = ~close, name = "underlyer", color = I("white")) %>%
     plotly::layout(
       yaxis = list("title" = "Price", color = "white"),
@@ -76,7 +61,7 @@ plot_strategy_prices <- function(epics, positions, resolution, n_prices) {
     )
   )
 
-  price_plots <- plotly::subplot(strategy_plot, underlyer_plot, greeks_plot, shareX = T, nrows = 3) %>%
+  plotly::subplot(strategy_plot, underlyer_plot, greeks_plot, shareX = T, nrows = 3) %>%
     plotly::layout(
       plot_bgcolor = "#252525",
       paper_bgcolor = "#252525",
