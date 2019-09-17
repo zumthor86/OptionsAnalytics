@@ -12,6 +12,8 @@ get_option_details <- function(epic) {
 
   instrument_name <- response$instrument$name
 
+  underlyer_id <- response$instrument$market_id
+
   strike <- as.numeric(stringr::str_extract(instrument_name, "\\d{4,}"))
 
   type <- stringr::str_extract(instrument_name, "C(?=ALL)|P(?=UT)")
