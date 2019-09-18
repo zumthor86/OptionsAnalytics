@@ -7,7 +7,7 @@
 intersect_prices(prices)
 }
 \arguments{
-\item{...}{Dataframes containing time series observations}
+\item{prices}{List of price dataframes}
 }
 \value{
 Input dataframes with common time series to all input dataframes

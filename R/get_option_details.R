@@ -20,9 +20,12 @@ get_option_details <- function(epic) {
 
   expiry <- lubridate::ymd_hm(response$instrument$expiryDetails$lastDealingDate)
 
+  underlyer <- get_option_underlyer(epic)[[1]]
+
   list(
     strike_price = strike,
     option_type = type,
-    expiry_datetime = expiry
+    expiry_datetime = expiry,
+    underlyer = underlyer
   )
 }

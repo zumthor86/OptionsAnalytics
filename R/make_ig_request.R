@@ -20,8 +20,8 @@ make_ig_request <- function(path, api_version, query = NULL) {
     config = httr::add_headers(
       VERSION = api_version,
       `X-IG-API-KEY` = Sys.getenv("SESSION_IG_API_KEY"),
-      CST = .session$headers$cst,
-      `X-SECURITY-TOKEN` = .session$headers$`x-security-token`
+      CST = Sys.getenv("SESSION_CST"),
+      `X-SECURITY-TOKEN` = Sys.getenv("SESSION_X_SECURITY_TOKEN")
     )
   )
 

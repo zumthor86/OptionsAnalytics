@@ -7,6 +7,8 @@
 #' @importFrom glue glue
 #' @importFrom httr add_headers
 #' @importFrom httr POST
+#' @importFrom utils globalVariables
+#'
 #' @examples
 initiate_ig_session <- function(env = "LIVE") {
   if (env == "LIVE") {
@@ -32,7 +34,7 @@ initiate_ig_session <- function(env = "LIVE") {
 
   host <- Sys.getenv("SESSION_IG_HOST")
 
-  .session <<- httr::POST(
+  session <- httr::POST(
     url = glue::glue("https://{host}/gateway/deal/session"),
     body = body,
     config = httr::add_headers(
@@ -41,4 +43,14 @@ initiate_ig_session <- function(env = "LIVE") {
     ),
     encode = "json"
   )
+
+  Sys.setenv("SESSION_X_SECURITY_TOKEN" = session$headers$`x-security-token`)
+  Sys.setenv("SESSION_CST" = session$headers$cst)
+
 }
+
+
+
+
+
+

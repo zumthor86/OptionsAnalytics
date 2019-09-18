@@ -1,9 +1,8 @@
 #' Return commmon time series
 #'
-#' @param ... Dataframes containing time series observations
+#' @param prices List of price dataframes
 #'
 #' @return Input dataframes with common time series to all input dataframes
-#'
 #'
 #' @importFrom purrr reduce
 #'

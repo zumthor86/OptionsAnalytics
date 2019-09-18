@@ -3,7 +3,7 @@
 #' @param epic Option epic
 #'
 #' @return Option underlyer
-#' @export
+#'
 #' @importFrom stringr str_extract
 #' @examples
 get_option_underlyer <- function(epic) {
