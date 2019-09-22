@@ -1,8 +1,8 @@
-new_option_leg <- function(strike_price = double(),
+new_option_leg <- function(strike_price = integer(),
                            expiry = double(),
                            option_type = character(),
                            underlyer = character(),
-                           position = double(),
+                           position = integer(),
                            opening_price = double(),
                            prices = tibble::tibble(),
                            epic = character()) {
@@ -31,10 +31,9 @@ validate_option_leg <- function(leg){
     purrr::every(
       list(
         leg$strike_price,
-        leg$position,
-        leg$opening_price
-      ),
-      is.double
+        leg$position
+        ),
+      is.integer
     ),
     purrr::every(
       list(
@@ -45,6 +44,7 @@ validate_option_leg <- function(leg){
       is.character
     ),
     is.data.frame(leg$prices),
+    is.double(leg$opening_price),
     lubridate::is.POSIXct(leg$expiry)
   )
 
@@ -108,7 +108,7 @@ option_leg <- function(epic, position, opening_price, resolution, n_prices) {
   if (is.na(opening_price)) opening_price <- tail(prices$close,1)
 
   new_option_leg(
-    strike_price = details$strike_price,
+    strike_price = as.integer(details$strike_price),
     expiry = details$expiry_datetime,
     option_type = details$option_type,
     underlyer = details$underlyer,
@@ -125,7 +125,7 @@ create_strategy <- function(epics, positions, opening_prices = NULL, resolution,
   if (is.null(opening_prices)) opening_prices <- rep(NA_real_, length(epics))
 
   legs <- purrr::pmap(list(epics,
-                           positions,
+                           as.integer(positions),
                            opening_prices),
                       ~option_leg(..1, ..2, ..3, resolution, n_prices)
                       )

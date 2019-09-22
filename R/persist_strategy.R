@@ -12,11 +12,18 @@
 #'
 #' @examples
 load_strategy <- function(path) {
-  strat_file <- jsonlite::read_json(path, simplifyDataFrame = T)
+  strat_file <- jsonlite::read_json(path)
 
   class(strat_file) <- "option_strategy"
 
+  strat_file <- strat_file %>% purrr::modify_in(.where = list("underlyer_prices"), dplyr::bind_rows)
+
   strat_file <- strat_file %>% purrr::modify_in(.where = list("underlyer_prices", "date_time"), lubridate::as_datetime)
+
+  strat_file$legs <- purrr::modify(
+    strat_file$legs,
+    ~ purrr::modify_in(.x, "prices",dplyr::bind_rows)
+  )
 
   strat_file$legs <- purrr::modify(
     strat_file$legs,
