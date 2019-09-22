@@ -85,6 +85,7 @@ print.option_leg <- function(option_leg) {
     "Strike price:", option_leg$strike_price, "\n",
     "Option Type:", option_leg$option_type, "\n",
     "Expiry:", as.character(option_leg$expiry), "\n",
+    "Opening price", option_leg$opening_price, "\n",
     "Position:", option_leg$position, "\n"
   )
 }
