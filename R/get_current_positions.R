@@ -12,14 +12,14 @@ get_current_positions <- function() {
 
   size <- pos$positions %>% purrr::map_dbl(list("position", "size"))
 
-  opening_price <- pos$positions %>% purrr::map_dbl(list("position", "level"))
+  opening_prices <- pos$positions %>% purrr::map_dbl(list("position", "level"))
 
-  direction <- pos$positions %>% purrr::map_chr(list("position", "direction"))
+  direction <- pos$positions %>% purrr::map_chr(list("position", "direction")) %>%
+    purrr::modify(~ dplyr::if_else(. == "BUY", 1, -1)) %>% as.numeric()
 
-  epic <- pos$positions %>% purrr::map_chr(list("market", "epic"))
+  positions <- size * direction
 
-  expiry <- pos$positions %>% purrr::map_chr(list("market", "expiry"))
+  epics <- pos$positions %>% purrr::map_chr(list("market", "epic"))
 
-  tibble::tibble(epic, opening_price, size, direction, expiry) %>%
-    purrr::modify_at("direction", ~ ifelse(. == "BUY", 1, -1))
+  tibble::tibble(epics, positions, opening_prices)
 }

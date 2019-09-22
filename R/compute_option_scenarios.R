@@ -29,6 +29,11 @@ compute_option_scenarios <- function(option_leg,
                                      n_scenarios = 20) {
   time_to_mat <- compute_ttm_years(scenario_datetime, expiry = option_leg$expiry)
 
+  if (time_to_mat<0) {
+    warning("Scenario datetime is after option expiry", call. = FALSE)
+    time_to_mat <- 0
+    }
+
   current_vol <- compute_implied_volatility(option_leg, underlyer_prices)
 
   partial_options <- purrr::partial(fOptions::GBSOption,

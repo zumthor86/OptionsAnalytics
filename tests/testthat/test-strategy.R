@@ -6,7 +6,8 @@ put <- glue::glue("OP.D.SPX1.{market_price}P.IP")
 test_that("create_strategy works", {
   expect_s3_class(object = create_strategy(epics = c(call, put),
                                            positions = c(1,1),
-                                           resolution = "HOUR", 5),
+                                           resolution = "HOUR",
+                                           n_prices =  5),
                   class = "option_strategy", exact = TRUE)
 
 })

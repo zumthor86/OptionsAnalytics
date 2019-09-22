@@ -2,23 +2,33 @@
 #'
 #' @param scenario_datetime
 #' @param epics
+#' @param positions
 #' @param opening_prices
-#' @param directions
-#' @param sizes
 #'
 #' @return 3D surface plot of PnL scenarios at given time
-#' @export
+#'
 #'
 #' @examples
-plot_positions_scenarios <- function(epics, opening_prices, directions, sizes, scenario_datetime) {
-  underlyer_price <- request_prices(get_option_underlyer(positions$epic[1]), resolution = "MINUTE", n_prices = 1)$close
-  # TODO refactor to use strategy objec
-  options_scenarios <- purrr::map(positions$epic, ~ compute_option_scenarios(., underlyer_price, scenario_datetime))
+plots_strategy_scenarios <- function(strategy, scenario_datetime) {
+
+  options_scenarios <- purrr::map(strategy$legs,
+                                  ~ compute_option_scenarios(.,
+                                                             scenario_datetime = scenario_datetime,
+                                                             underlyer_prices = strategy$underlyer_prices$close,
+                                                             ))
+
+  opening_prices <- purrr::map(strategy$legs, "opening_price")
+
+  positions <- purrr::map(strategy$legs, "position")
 
   pnl_scen <- purrr::pmap(
-    list(options_scenarios, opening_prices, directions, sizes),
-    ~ (..1 - ..2) * ..3 * ..4
+    list(options_scenarios, opening_prices, positions),
+    ~ (..1 - ..2) * ..3
   ) %>% purrr::reduce(`+`)
 
   plot_scenario_surface(pnl_scen)
 }
+
+
+
+
