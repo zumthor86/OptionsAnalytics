@@ -7,7 +7,9 @@
 plot_strategy_scenarios(strategy, scenario_datetime)
 }
 \arguments{
-\item{opening_prices}{}
+\item{strategy}{Strategy object}
+
+\item{scenario_datetime}{Time at which to evaluate scenarios}
 }
 \value{
 3D surface plot of PnL scenarios at given time

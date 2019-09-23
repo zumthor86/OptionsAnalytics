@@ -13,7 +13,6 @@
 #'
 #' @examples
 plot_strategy_prices <- function(strategy) {
-
   strategy_prices <- compute_strategy_prices(strategy)
 
   strategy_greeks <- compute_strategy_greeks(strategy)

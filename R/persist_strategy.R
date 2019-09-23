@@ -22,7 +22,7 @@ load_strategy <- function(path) {
 
   strat_file$legs <- purrr::modify(
     strat_file$legs,
-    ~ purrr::modify_in(.x, "prices",dplyr::bind_rows)
+    ~ purrr::modify_in(.x, "prices", dplyr::bind_rows)
   )
 
   strat_file$legs <- purrr::modify(

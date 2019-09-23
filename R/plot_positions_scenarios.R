@@ -1,21 +1,20 @@
 #' Plot an existing positions PnL scenarios at a given time
 #'
-#' @param scenario_datetime
-#' @param epics
-#' @param positions
-#' @param opening_prices
+#' @param strategy Strategy object
+#' @param scenario_datetime Time at which to evaluate scenarios
 #'
 #' @return 3D surface plot of PnL scenarios at given time
 #'
 #'
 #' @examples
 plot_strategy_scenarios <- function(strategy, scenario_datetime) {
-
-  options_scenarios <- purrr::map(strategy$legs,
-                                  ~ compute_option_scenarios(.,
-                                                             scenario_datetime = scenario_datetime,
-                                                             underlyer_prices = strategy$underlyer_prices$close,
-                                                             ))
+  options_scenarios <- purrr::map(
+    strategy$legs,
+    ~ compute_option_scenarios(.,
+      scenario_datetime = scenario_datetime,
+      underlyer_prices = strategy$underlyer_prices$close,
+    )
+  )
 
   opening_prices <- purrr::map(strategy$legs, "opening_price")
 
@@ -31,9 +30,9 @@ plot_strategy_scenarios <- function(strategy, scenario_datetime) {
 
 #' Plot option scenarios
 #'
-#' @param scenario_matrix
+#' @param scenario_matrix Matrix of underlyer/volatility permutations
 #'
-#' @return
+#' @return 3D surface plot of scenarios
 #'
 #' @examples
 plot_scenario_surface <- function(scenario_matrix) {
@@ -79,6 +78,3 @@ plot_scenario_surface <- function(scenario_matrix) {
       opacity = 0.5
     )
 }
-
-
-

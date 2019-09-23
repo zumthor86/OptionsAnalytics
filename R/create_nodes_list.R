@@ -1,9 +1,10 @@
 #' Create named list of market nodes
 #'
 #' @param node_id ID of the market node
+#' @param recursive Logical indicating whether to traverse the market hierarchy or not (default)
 #'
 #' @return Named list where the node_ids constitute the values
-#' @export
+#'
 #' @importFrom purrr set_names
 #' @examples
 create_nodes_list <- function(node_id, recursive = FALSE) {

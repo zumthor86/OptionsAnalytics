@@ -3,8 +3,6 @@ test_that("Throws input errors", {
   expect_error(request_prices(resolution = "year"))
 })
 
-initiate_ig_session("DEMO")
-
 prices <- request_prices(resolution = "MINUTE", n_prices = 5)
 
 test_that("Returns dataframe of correct dimensions", {

@@ -38,8 +38,8 @@ greeks_by_time <- function(option_leg,
                            underlyer_prices,
                            underlyer_datetimes) {
   partial_greeks <- purrr::partial(get_greeks,
-                                   strike_price = option_leg$strike_price,
-                                   option_type = option_leg$option_type
+    strike_price = option_leg$strike_price,
+    option_type = option_leg$option_type
   )
 
 
@@ -80,13 +80,13 @@ get_greeks <- function(r = 0.05,
                        option_type,
                        greek_selections = c("delta", "gamma", "vega", "theta")) {
   get_greek <- purrr::partial(fOptions::GBSGreeks,
-                              TypeFlag = tolower(option_type),
-                              S = underlyer_price,
-                              X = strike_price,
-                              Time = time_to_mat,
-                              r = r,
-                              b = b,
-                              sigma = underlyer_annual_vol
+    TypeFlag = tolower(option_type),
+    S = underlyer_price,
+    X = strike_price,
+    Time = time_to_mat,
+    r = r,
+    b = b,
+    sigma = underlyer_annual_vol
   )
 
   greeks <- purrr::map(greek_selections, ~ get_greek(Selection = .))

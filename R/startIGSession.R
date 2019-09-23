@@ -46,11 +46,4 @@ initiate_ig_session <- function(env = "LIVE") {
 
   Sys.setenv("SESSION_X_SECURITY_TOKEN" = session$headers$`x-security-token`)
   Sys.setenv("SESSION_CST" = session$headers$cst)
-
 }
-
-
-
-
-
-

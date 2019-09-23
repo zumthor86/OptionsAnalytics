@@ -1,12 +1,13 @@
 #' Compute option price scenarios at a given point in time
 #'
 #' @param scenario_datetime Datetime at which to compute option price scenarios
-#' @param option_leg
-#' @param underlyer_min
-#' @param underlyer_max
-#' @param vol_min
-#' @param vol_max
-#' @param n_scenarios
+#' @param option_leg Option Leg object
+#' @param underlyer_min Lower bound of underlyer scenarios as a fraction of current price
+#' @param underlyer_max Upper bound of underlyer scenarios as a fraction of current price
+#' @param vol_min Lower bound of volatility scenarios as a fraction of current volatility
+#' @param vol_max Upper bound of volatility scenarios as a fraction of current volatility
+#' @param n_scenarios Number of scenarios to compute for underlyer price and volatility
+#' @param underlyer_prices Vector of underlyer closing prices, matching the option leg prices
 #'
 #' @return Matrix of option prices for different underlyer prices and volatility
 #' @export
@@ -29,10 +30,10 @@ compute_option_scenarios <- function(option_leg,
                                      n_scenarios = 20) {
   time_to_mat <- compute_ttm_years(scenario_datetime, expiry = option_leg$expiry)
 
-  if (time_to_mat<0) {
+  if (time_to_mat < 0) {
     warning("Scenario datetime is after option expiry", call. = FALSE)
     time_to_mat <- 0
-    }
+  }
 
   current_vol <- compute_implied_volatility(option_leg, underlyer_prices)
 

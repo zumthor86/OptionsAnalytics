@@ -8,6 +8,8 @@ create_nodes_list(node_id, recursive = FALSE)
 }
 \arguments{
 \item{node_id}{ID of the market node}
+
+\item{recursive}{Logical indicating whether to traverse the market hierarchy or not (default)}
 }
 \value{
 Named list where the node_ids constitute the values

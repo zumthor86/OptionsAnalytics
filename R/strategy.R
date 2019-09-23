@@ -6,8 +6,6 @@ new_option_leg <- function(strike_price = integer(),
                            opening_price = double(),
                            prices = tibble::tibble(),
                            epic = character()) {
-
-
   structure(list(
     "strike_price" = strike_price,
     "expiry" = expiry,
@@ -22,7 +20,7 @@ new_option_leg <- function(strike_price = integer(),
   )
 }
 
-validate_option_leg <- function(leg){
+validate_option_leg <- function(leg) {
 
   # if (is.na(leg$opening_price)) assertthat::assert_that(is.double(leg$opening_price))
 
@@ -32,7 +30,7 @@ validate_option_leg <- function(leg){
       list(
         leg$strike_price,
         leg$position
-        ),
+      ),
       is.integer
     ),
     purrr::every(
@@ -49,13 +47,11 @@ validate_option_leg <- function(leg){
   )
 
   leg
-
 }
 
 
 new_option_strategy <- function(legs = list(),
                                 underlyer_prices = tibble::tibble()) {
-
   structure(list(
     "legs" = legs,
     "underlyer_prices" = underlyer_prices
@@ -65,8 +61,7 @@ new_option_strategy <- function(legs = list(),
   )
 }
 
-validate_option_strategy <- function(strategy){
-
+validate_option_strategy <- function(strategy) {
   assertthat::assert_that(
     is.list(strategy$legs),
     is.data.frame(strategy$underlyer_prices),
@@ -74,7 +69,6 @@ validate_option_strategy <- function(strategy){
   )
 
   strategy
-
 }
 
 
@@ -105,7 +99,7 @@ option_leg <- function(epic, position, opening_price, resolution, n_prices) {
 
   prices <- request_prices(epic, resolution, n_prices)
 
-  if (is.na(opening_price)) opening_price <- tail(prices$close,1)
+  if (is.na(opening_price)) opening_price <- tail(prices$close, 1)
 
   new_option_leg(
     strike_price = as.integer(details$strike_price),
@@ -120,20 +114,18 @@ option_leg <- function(epic, position, opening_price, resolution, n_prices) {
     validate_option_leg()
 }
 
-create_strategy <- function(epics, positions, opening_prices = NULL, resolution, n_prices){
-
+create_strategy <- function(epics, positions, opening_prices = NULL, resolution, n_prices) {
   if (is.null(opening_prices)) opening_prices <- rep(NA_real_, length(epics))
 
-  legs <- purrr::pmap(list(epics,
-                           as.integer(positions),
-                           opening_prices),
-                      ~option_leg(..1, ..2, ..3, resolution, n_prices)
-                      )
+  legs <- purrr::pmap(
+    list(
+      epics,
+      as.integer(positions),
+      opening_prices
+    ),
+    ~ option_leg(..1, ..2, ..3, resolution, n_prices)
+  )
 
   new_option_strategy(legs, request_prices(legs[[1]]$underlyer, resolution, n_prices)) %>%
     validate_option_strategy()
-
 }
-
-
-

@@ -14,8 +14,10 @@ get_current_positions <- function() {
 
   opening_prices <- pos$positions %>% purrr::map_dbl(list("position", "level"))
 
-  direction <- pos$positions %>% purrr::map_chr(list("position", "direction")) %>%
-    purrr::modify(~ dplyr::if_else(. == "BUY", 1, -1)) %>% as.numeric()
+  direction <- pos$positions %>%
+    purrr::map_chr(list("position", "direction")) %>%
+    purrr::modify(~ dplyr::if_else(. == "BUY", 1, -1)) %>%
+    as.numeric()
 
   positions <- size * direction
 

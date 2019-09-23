@@ -7,7 +7,10 @@
 plot_scenario_surface(scenario_matrix)
 }
 \arguments{
-\item{scenario_matrix}{}
+\item{scenario_matrix}{Matrix of underlyer/volatility permutations}
+}
+\value{
+3D surface plot of scenarios
 }
 \description{
 Plot option scenarios
