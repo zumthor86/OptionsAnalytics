@@ -15,10 +15,3 @@ Node data, containing either IDs of children nodes or market information if its 
 \description{
 Request market node data
 }
-\examples{
-\dontrun{
-
-request_market_navigation <- function(node_id = 346003)
-
-}
-}
