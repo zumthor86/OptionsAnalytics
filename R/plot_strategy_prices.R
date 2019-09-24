@@ -19,25 +19,30 @@ plot_strategy_prices <- function(strategy) {
 
   greeks_colors <- RColorBrewer::brewer.pal(n = 4, name = "YlOrRd")
 
-  greeks_plot <- plotly::plot_ly(strategy_greeks, x = ~date_time) %>%
-    plotly::add_lines(y = ~delta, name = "delta", color = I(greeks_colors[[1]])) %>%
-    plotly::add_lines(y = ~vega, name = "vega", color = I(greeks_colors[[2]])) %>%
-    plotly::add_lines(y = ~gamma, name = "gamma", color = I(greeks_colors[[3]])) %>%
-    plotly::add_lines(y = ~theta, name = "theta", color = I(greeks_colors[[4]])) %>%
+  common_strat_greeks <- strategy_greeks %>% dplyr::semi_join(strategy_prices)
+
+  greeks_plot <- plotly::plot_ly(common_strat_greeks, x = ~date_time) %>%
+    plotly::add_trace(y = ~delta, name = "delta", color = I(greeks_colors[[1]]), mode = "lines+markers", type = "scatter") %>%
+    plotly::add_trace(y = ~vega, name = "vega", color = I(greeks_colors[[2]]), mode = "lines+markers", type = "scatter") %>%
+    plotly::add_trace(y = ~gamma, name = "gamma", color = I(greeks_colors[[3]]), mode = "lines+markers", type = "scatter") %>%
+    plotly::add_trace(y = ~theta, name = "theta", color = I(greeks_colors[[4]]), mode = "lines+markers", type = "scatter") %>%
     plotly::layout(
       xaxis = list("type" = "category", "title" = "DateTime", color = "white"),
       yaxis = list("title" = "Exposures", color = "white")
     )
 
-  underlyer_plot <- plotly::plot_ly(strategy$underlyer_prices, x = ~date_time) %>%
-    plotly::add_lines(y = ~close, name = "underlyer", color = I("white")) %>%
+  common_strat_prices <- strategy$underlyer_prices %>%
+    dplyr::semi_join(strategy_prices, by = "date_time")
+
+  underlyer_plot <- plotly::plot_ly(common_strat_prices, x = ~date_time) %>%
+    plotly::add_trace(y = ~close, name = "underlyer", color = I("white"), mode = "lines+markers", type = "scatter") %>%
     plotly::layout(
       yaxis = list("title" = "Price", color = "white"),
       xaxis = list("type" = "category")
     )
 
   strategy_plot <- plotly::plot_ly(strategy_prices) %>%
-    plotly::add_lines(x = ~date_time, y = ~close, name = "strategy") %>%
+    plotly::add_trace(x = ~date_time, y = ~close, name = "strategy", mode = "lines+markers", type = "scatter") %>%
     plotly::layout(
       yaxis = list("title" = "Price", color = "white"),
       xaxis = list("type" = "category")
