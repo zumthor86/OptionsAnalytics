@@ -33,19 +33,11 @@ traverse_market_hierarchy <- function(node_id, pause = 0) {
 #' @return Node data, containing either IDs of children nodes or market information if its a leaf
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#'
-#' request_market_navigation <- function(node_id = 346003)
-#'
-#' }
-request_market_navigation <- function(node_id){
-
+request_market_navigation <- function(node_id) {
   path <- glue::glue("marketnavigation/{node_id}")
 
   make_ig_request(path = path, api_version = 1) %>%
     httr::content()
-
 }
 
 
@@ -56,4 +48,3 @@ slowExec <- function(pause, f, ...) {
     f(...)
   }
 }
-
