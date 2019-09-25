@@ -2,11 +2,11 @@
 #'
 #' @param scenario_datetime Datetime at which to compute option price scenarios
 #' @param option_leg Option Leg object
-#' @param underlyer_min Lower bound of underlyer scenarios as a fraction of current price
-#' @param underlyer_max Upper bound of underlyer scenarios as a fraction of current price
 #' @param vol_min Lower bound of volatility scenarios as a fraction of current volatility
 #' @param vol_max Upper bound of volatility scenarios as a fraction of current volatility
-#' @param n_scenarios Number of scenarios to compute for underlyer price and volatility
+#' @param n_scenarios Number of scenarios to compute for underlyer volatility
+#' @param underlyer_min Minimum underlyer price
+#' @param underlyer_max Maximum underlyer price
 #' @param underlyer_prices Vector of underlyer closing prices, matching the option leg prices
 #'
 #' @return Matrix of option prices for different underlyer prices and volatility
@@ -23,8 +23,9 @@
 compute_option_scenarios <- function(option_leg,
                                      scenario_datetime,
                                      underlyer_prices,
-                                     underlyer_min = 0.9,
-                                     underlyer_max = 1.1,
+                                     underlyer_min,
+                                     underlyer_max,
+                                     underlyer_margin = 20,
                                      vol_min = 0.7,
                                      vol_max = 1.3,
                                      n_scenarios = 20) {
@@ -44,7 +45,7 @@ compute_option_scenarios <- function(option_leg,
     r = 0.05, b = 0.05
   )
 
-  underlyer_space <- utils::tail(underlyer_prices, 1) * seq(underlyer_min, underlyer_max, length.out = n_scenarios)
+  underlyer_space <- seq(underlyer_min-underlyer_margin, underlyer_max+underlyer_margin, 5)
 
   volatility_span <- seq(vol_min, vol_max, length.out = n_scenarios)
 
@@ -53,9 +54,11 @@ compute_option_scenarios <- function(option_leg,
   option_scenarios <- purrr::cross_df(list("vol" = volatility_space, "underlyer" = underlyer_space)) %>%
     dplyr::mutate(price = purrr::map2_dbl(.data$vol, .data$underlyer, ~ partial_options(S = .y, sigma = .x) %>% slot("price")))
 
+  option_scenarios$price[is.nan(option_scenarios$price)] <- 0
+
   matrix(
     data = option_scenarios$price,
-    nrow = n_scenarios,
+    nrow = length(underlyer_space),
     ncol = n_scenarios,
     byrow = TRUE,
     dimnames = list(underlyer_space, volatility_span)

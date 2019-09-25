@@ -7,11 +7,19 @@
 #'
 #'
 #' @examples
-plot_strategy_scenarios <- function(strategy, scenario_datetime) {
+plot_strategy_scenarios <- function(strategy,
+                                    scenario_datetime,
+                                    underlyer_margin = 20
+                                    ) {
+
+  strikes <- purrr::map_int(strategy$legs, "strike_price")
+
   options_scenarios <- purrr::map(
     strategy$legs,
     ~ compute_option_scenarios(.,
-      scenario_datetime = scenario_datetime,
+                               underlyer_min = min(strikes),
+                               underlyer_max = max(strikes),
+                               scenario_datetime = scenario_datetime,
       underlyer_prices = strategy$underlyer_prices$close,
     )
   )
