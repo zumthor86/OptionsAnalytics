@@ -28,9 +28,42 @@ plot_strategy_pnl <- function(strategy, underlyer_margin = 40) {
     ~ (..1 - ..2) * ..3
   ) %>% purrr::reduce(`+`)
 
-  plotly::plot_ly() %>% plotly::add_trace(x = rownames(pnl_scen),
-                                          y = pnl_scen[,1],
-                                          type = "scatter", mode = "lines+markers")
+  AUC <- pracma::trapz(as.numeric(rownames(pnl_scen)),pnl_scen[,1]) %>% round()
+
+  pos <- which(pnl_scen>0)
+
+  start_pos <- min(pos)
+
+  inter_min <- approx(row.names(pnl_scen)[(start_pos-1):start_pos] , pnl_scen[(start_pos-1):start_pos])
+
+  min_brkeven <- inter_min$x[which.min(abs(inter_min$y))] %>% round(2)
+
+  end_pos <- max(pos)
+
+  inter_max <- approx(row.names(pnl_scen)[end_pos:(end_pos+1)] , pnl_scen[end_pos:(end_pos+1)])
+
+  max_brkeven <- inter_max$x[which.min(abs(inter_max$y))] %>% round(2)
+
+  annotation <- glue::glue("AUC:{AUC}")
+
+  underlyer <- rownames(pnl_scen)
+
+  max_profit <- max(pnl_scen)
+
+  plotly::plot_ly() %>%
+    plotly::add_trace(x = underlyer,
+                      y = pnl_scen[,1],
+                      type = "scatter",
+                      mode = "lines+markers") %>%
+    plotly::add_text(x = as.numeric(min(underlyer)),
+                     y = max_profit,
+                     text = annotation) %>%
+    plotly::add_segments(x = min_brkeven,
+                         xend = min_brkeven,
+                         y = 0,
+                         yend = max_profit,
+                         color = I("grey")) %>%
+    plotly::add_segments(x = max_brkeven, xend = max_brkeven, y = 0, yend = max_profit, color = I("grey"))
 }
 
 #' Compute option PnL Scenarios at expiry
