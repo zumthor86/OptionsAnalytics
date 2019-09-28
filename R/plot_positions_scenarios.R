@@ -2,6 +2,7 @@
 #'
 #' @param strategy Strategy object
 #' @param scenario_datetime Time at which to evaluate scenarios
+#' @param underlyer_margin Integer specifying padding at margins of PnL graph
 #'
 #' @return 3D surface plot of PnL scenarios at given time
 #'

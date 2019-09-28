@@ -1,9 +1,12 @@
 #' Plot option Profit and Loss Scenarios
 #'
 #' @param strategy Strategy object
+#' @param underlyer_margin Integer specifying padding at margins of PnL graph
 #'
 #' @return Plot of PnL
 #' @export
+#'
+#' @importFrom pracma trapz
 #'
 #' @examples
 plot_strategy_pnl <- function(strategy, underlyer_margin = 40) {
@@ -34,13 +37,13 @@ plot_strategy_pnl <- function(strategy, underlyer_margin = 40) {
 
   start_pos <- min(pos)
 
-  inter_min <- approx(row.names(pnl_scen)[(start_pos-1):start_pos] , pnl_scen[(start_pos-1):start_pos])
+  inter_min <- stats::approx(row.names(pnl_scen)[(start_pos-1):start_pos] , pnl_scen[(start_pos-1):start_pos])
 
   min_brkeven <- inter_min$x[which.min(abs(inter_min$y))] %>% round(2)
 
   end_pos <- max(pos)
 
-  inter_max <- approx(row.names(pnl_scen)[end_pos:(end_pos+1)] , pnl_scen[end_pos:(end_pos+1)])
+  inter_max <- stats::approx(row.names(pnl_scen)[end_pos:(end_pos+1)] , pnl_scen[end_pos:(end_pos+1)])
 
   max_brkeven <- inter_max$x[which.min(abs(inter_max$y))] %>% round(2)
 

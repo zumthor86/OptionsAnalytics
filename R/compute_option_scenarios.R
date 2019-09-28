@@ -8,6 +8,7 @@
 #' @param underlyer_min Minimum underlyer price
 #' @param underlyer_max Maximum underlyer price
 #' @param underlyer_prices Vector of underlyer closing prices, matching the option leg prices
+#' @param underlyer_margin Integer specifying padding at margins of PnL graph
 #'
 #' @return Matrix of option prices for different underlyer prices and volatility
 #' @export

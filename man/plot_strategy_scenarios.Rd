@@ -4,12 +4,15 @@
 \alias{plot_strategy_scenarios}
 \title{Plot an existing positions PnL scenarios at a given time}
 \usage{
-plot_strategy_scenarios(strategy, scenario_datetime)
+plot_strategy_scenarios(strategy, scenario_datetime,
+  underlyer_margin = 20)
 }
 \arguments{
 \item{strategy}{Strategy object}
 
 \item{scenario_datetime}{Time at which to evaluate scenarios}
+
+\item{underlyer_margin}{Integer specifying padding at margins of PnL graph}
 }
 \value{
 3D surface plot of PnL scenarios at given time

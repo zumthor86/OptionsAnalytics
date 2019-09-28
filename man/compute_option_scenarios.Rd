@@ -5,7 +5,7 @@
 \title{Compute option price scenarios at a given point in time}
 \usage{
 compute_option_scenarios(option_leg, scenario_datetime, underlyer_prices,
-  underlyer_min = 0.9, underlyer_max = 1.1, vol_min = 0.7,
+  underlyer_min, underlyer_max, underlyer_margin = 20, vol_min = 0.7,
   vol_max = 1.3, n_scenarios = 20)
 }
 \arguments{
@@ -15,15 +15,17 @@ compute_option_scenarios(option_leg, scenario_datetime, underlyer_prices,
 
 \item{underlyer_prices}{Vector of underlyer closing prices, matching the option leg prices}
 
-\item{underlyer_min}{Lower bound of underlyer scenarios as a fraction of current price}
+\item{underlyer_min}{Minimum underlyer price}
 
-\item{underlyer_max}{Upper bound of underlyer scenarios as a fraction of current price}
+\item{underlyer_max}{Maximum underlyer price}
+
+\item{underlyer_margin}{Integer specifying padding at margins of PnL graph}
 
 \item{vol_min}{Lower bound of volatility scenarios as a fraction of current volatility}
 
 \item{vol_max}{Upper bound of volatility scenarios as a fraction of current volatility}
 
-\item{n_scenarios}{Number of scenarios to compute for underlyer price and volatility}
+\item{n_scenarios}{Number of scenarios to compute for underlyer volatility}
 }
 \value{
 Matrix of option prices for different underlyer prices and volatility
