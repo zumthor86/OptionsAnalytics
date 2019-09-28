@@ -44,6 +44,12 @@ initiate_ig_session <- function(env = "LIVE") {
     encode = "json"
   )
 
+  print(Sys.getenv("SESSION_IG_USERNAME"))
+  print(Sys.getenv("SESSION_IG_PASSWORD"))
+  print(Sys.getenv("SESSION_IG_HOST"))
+  print(Sys.getenv("SESSION_IG_API_KEY"))
+
+
   Sys.setenv("SESSION_X_SECURITY_TOKEN" = session$headers$`x-security-token`)
   Sys.setenv("SESSION_CST" = session$headers$cst)
 }
