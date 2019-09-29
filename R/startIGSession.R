@@ -11,6 +11,10 @@
 #'
 #' @examples
 initiate_ig_session <- function(env = "LIVE") {
+
+  assertthat::assert_that((env %in% c("LIVE", "DEMO")),
+                          msg = "env must be 'LIVE' or 'DEMO'")
+
   if (env == "LIVE") {
     Sys.setenv(
       "SESSION_IG_USERNAME" = Sys.getenv("LIVE_IG_USERNAME"),

@@ -6,6 +6,7 @@
 #'
 #' @return 3D surface plot of PnL scenarios at given time
 #'
+#' @export
 #'
 #' @examples
 plot_strategy_scenarios <- function(strategy,

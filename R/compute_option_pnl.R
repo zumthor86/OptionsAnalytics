@@ -37,36 +37,84 @@ plot_strategy_pnl <- function(strategy, underlyer_margin = 40) {
 
   start_pos <- min(pos)
 
-  inter_min <- stats::approx(row.names(pnl_scen)[(start_pos-1):start_pos] , pnl_scen[(start_pos-1):start_pos])
+  if (start_pos>1){
 
-  min_brkeven <- inter_min$x[which.min(abs(inter_min$y))] %>% round(2)
+    inter_min <- stats::approx(row.names(pnl_scen)[(start_pos-1):start_pos],
+                               pnl_scen[(start_pos-1):start_pos])
+
+    min_brkeven <- round(inter_min$x[which.min(abs(inter_min$y))],2)
+
+  }
 
   end_pos <- max(pos)
 
-  inter_max <- stats::approx(row.names(pnl_scen)[end_pos:(end_pos+1)] , pnl_scen[end_pos:(end_pos+1)])
+  if (end_pos<length(pnl_scen)){
 
-  max_brkeven <- inter_max$x[which.min(abs(inter_max$y))] %>% round(2)
+    inter_max <- stats::approx(row.names(pnl_scen)[end_pos:(end_pos+1)],
+                               pnl_scen[end_pos:(end_pos+1)])
 
-  annotation <- glue::glue("AUC:{AUC}")
+    max_brkeven <- round(inter_max$x[which.min(abs(inter_max$y))],2)
+
+  }
+
+
+  annotation <- glue::glue("Profit AUC:{AUC}")
 
   underlyer <- rownames(pnl_scen)
 
   max_profit <- max(pnl_scen)
 
-  plotly::plot_ly() %>%
+  plot_title <- list(
+    "text" = "Strategy Profit at expiration",
+    "font" = list(
+      "family" = "sans-serif",
+      "size" = 16,
+      "color" = "white"
+    )
+  )
+
+  base_plot <- plotly::plot_ly() %>%
     plotly::add_trace(x = underlyer,
                       y = pnl_scen[,1],
                       type = "scatter",
                       mode = "lines+markers") %>%
     plotly::add_text(x = as.numeric(min(underlyer)),
                      y = max_profit,
-                     text = annotation) %>%
-    plotly::add_segments(x = min_brkeven,
-                         xend = min_brkeven,
-                         y = 0,
-                         yend = max_profit,
-                         color = I("grey")) %>%
-    plotly::add_segments(x = max_brkeven, xend = max_brkeven, y = 0, yend = max_profit, color = I("grey"))
+                     text = annotation,
+                     color = I("white")) %>%
+    plotly::layout(showlegend = FALSE,
+                   plot_bgcolor = "#252525",
+                   paper_bgcolor = "#252525",
+                   yaxis = list("title" = "Profit/Loss", color = "white"),
+                   xaxis = list("title" = "Underlyer", color = "white"),
+                   title = plot_title)
+
+  if(exists("min_brkeven")){
+
+    base_plot <- base_plot %>%
+      plotly::add_segments(x = min_brkeven,
+                           xend = min_brkeven,
+                           y = 0,
+                           yend = max_profit,
+                           color = I("grey"))
+
+
+
+  }
+
+  if(exists("max_brkeven")){
+
+    base_plot <- base_plot %>%
+      plotly::add_segments(x = max_brkeven,
+                           xend = max_brkeven,
+                           y = 0,
+                           yend = max_profit,
+                           color = I("grey"))
+
+  }
+
+  base_plot
+
 }
 
 #' Compute option PnL Scenarios at expiry

@@ -114,6 +114,18 @@ option_leg <- function(epic, position, opening_price, resolution, n_prices) {
     validate_option_leg()
 }
 
+#' Instantiate new strategy object
+#'
+#' @param epics Vector or epics for each leg of strategy
+#' @param positions Integer vector specifiying positions in each leg
+#' @param opening_prices Double vector of opening prices, only used when using a live strategy
+#' @param resolution Plot resolution, eg. "HOUR", "MINUTE_5", "DAY"
+#' @param n_prices Number of prices
+#'
+#' @return
+#' @export
+#'
+#' @examples
 create_strategy <- function(epics, positions, opening_prices = NULL, resolution, n_prices) {
   if (is.null(opening_prices)) opening_prices <- rep(NA_real_, length(epics))
 
