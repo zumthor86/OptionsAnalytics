@@ -118,7 +118,7 @@ The `get_current_positions()` function will return a tibble of options legs. You
 
 `plot_strategy_prices` will provide an interactive plot of the strategy prices, the underlyer, as well as the greeks. Note that a negative price indicates that the strategy was constructed at a net credit, i.e. the value of premiums sold is greater than premiums bought.
 
-```{r plot_strat}
+```{r plot_strat, plotly=TRUE}
 
 plot_strategy_prices(gold_strat)
 
@@ -128,7 +128,7 @@ plot_strategy_prices(gold_strat)
 
 `plot_strategy_scenarios` allows you to evaluate the possible price of the strategy for different values of the underlyer an implied volatility at a chosen point in time.
 
-```{r plot_scen}
+```{r plot_scen, plotly=TRUE}
 
 plot_strategy_scenarios(gold_strat, 
                         scenario_datetime =  gold_strat$legs[[1]]$expiry-lubridate::days(20))
@@ -139,7 +139,7 @@ plot_strategy_scenarios(gold_strat,
 
 Assuming that all the legs have the same expiration, one can plot the expiration PnL
 
-```{r}
+```{r, plotly=TRUE}
 
 plot_strategy_pnl(gold_strat)
 
