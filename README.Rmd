@@ -68,7 +68,7 @@ IG uses an instrument ID known as an 'epic'. Unfortunately the epics dont always
 
 # Commodity options node_id = 166251
 
-comm_mkts <- create_market_env(166251)
+comm_mkts <- create_market_env(166251, pause = 1)
 
 head(names(comm_mkts))
 
@@ -126,7 +126,7 @@ plot_strategy_prices(gold_strat)
 
 ## Plot strategy scenarios at a point in time
 
-`plot_strategy_scenarios` allows you to evaluate the possible price of the strategy for different values of the underlyer an implied volatility at a chosen point in time.
+`plot_strategy_scenarios` allows you to evaluate the possible price of the strategy for different values of the underlyer and implied volatility at a chosen point in time.
 
 ```{r plot_scen, plotly=TRUE}
 
