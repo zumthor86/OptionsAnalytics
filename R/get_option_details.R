@@ -45,7 +45,7 @@ get_option_details <- function(epic) {
 #' @importFrom stringr str_extract
 #' @examples
 get_option_underlyer <- function(epic) {
-  underlyer <- stringr::str_extract(epic, "SI|GC|OIL|SP|EURO|BR|EGBP|EJPY|GBPY|GBP|AUD|CAD|JPY+")
+  underlyer <- stringr::str_extract(epic, "SI|GC|GOLDWEEK|OIL|SP|EURO|BR|EGBP|EJPY|GBPY|GBP|AUD|CAD|JPY+")
 
   underlyers <- c(
     "SP" = "IX.D.SPTRD.DAILY.IP",
@@ -60,8 +60,16 @@ get_option_underlyer <- function(epic) {
     "JPY" = "CS.D.USDJPY.TODAY.IP",
     "OIL" = "CC.D.CL.USS.IP",
     "GC" = "CS.D.USCGC.TODAY.IP",
-    "SI" = "CS.D.USCSI.TODAY.IP"
+    "SI" = "CS.D.USCSI.TODAY.IP",
+    "GOLDWEEK" = "MT.D.GC.MONTH1.IP"
   )
 
-  underlyers[underlyer]
+  underlyer_epic <- underlyers[underlyer]
+
+  assertthat::assert_that(!is.na(underlyer_epic),
+                          msg = "Underlyer not found")
+
+  underlyer_epic
+
+
 }

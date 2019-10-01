@@ -71,27 +71,14 @@ validate_option_strategy <- function(strategy) {
   strategy
 }
 
-
-
-print.option_leg <- function(option_leg) {
-  cat(
-    " Underlyer:", option_leg$underlyer, "\n",
-    "Strike price:", option_leg$strike_price, "\n",
-    "Option Type:", option_leg$option_type, "\n",
-    "Expiry:", as.character(option_leg$expiry), "\n",
-    "Opening price", option_leg$opening_price, "\n",
-    "Position:", option_leg$position, "\n"
-  )
-}
-
 print.option_strategy <- function(option_strategy) {
-  purrr::map(option_strategy$legs, print)
-}
-
-select_legs <- function(env, ...) {
-  legs <- rlang::enexprs(...)
-
-  purrr::map(legs, eval, env)
+  purrr::map(option_strategy$legs,
+             ~unclass(.) %>% .[c("strike_price",
+                                 "expiry",
+                                 "option_type",
+                                 "position",
+                                 "opening_price")]) %>%
+    dplyr::bind_rows()
 }
 
 option_leg <- function(epic, position, opening_price, resolution, n_prices) {

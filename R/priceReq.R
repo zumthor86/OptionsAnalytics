@@ -1,4 +1,4 @@
-#' Request historical prices
+#' Request number of historical prices
 #'
 #' @param epic Instrument ID
 #' @param resolution Time interval of prices eg. "HOUR", "DAY", "MINUTE_15"
@@ -47,28 +47,72 @@ request_prices <-
 
     prcs <- httr::content(response)
 
-    price_names <- c(
-      "closePrice",
-      "openPrice",
-      "highPrice",
-      "lowPrice"
-    )
+    prices <- parse_prices(prcs, price_type)
 
-    prices <- purrr::map_depth(prcs$prices, 2, ~ pluck(., price_type, .default = 0)) %>%
-      dplyr::bind_rows() %>%
-      dplyr::select(dplyr::one_of(price_names))
+    dplyr::bind_cols(prices,
+                     epic = rlang::rep_along(prices$close, epic))
 
-    dateTime <- purrr::map_chr(prcs$prices, "snapshotTimeUTC") %>%
-      lubridate::ymd_hms()
-
-    volume <- purrr::map_int(prcs$prices, "lastTradedVolume")
-
-    names(prices) <- c("close", "open", "high", "low")
-
-    dplyr::bind_cols(
-      date_time = dateTime,
-      prices,
-      volume = volume,
-      epic = rep(epic, length(volume))
-    )
   }
+
+#' Parse IG Index prices
+#'
+#' @param prices_response Response from IG index
+#'
+#' @return Dataframe of historical prices
+#'
+#' @examples
+parse_prices <- function(prices_response,
+                         price_type) {
+  price_names <- c(
+    "closePrice",
+    "openPrice",
+    "highPrice",
+    "lowPrice"
+  )
+
+  prices <- purrr::map_depth(prices_response$prices, 2, ~ pluck(., price_type, .default = 0)) %>%
+    dplyr::bind_rows() %>%
+    dplyr::select(dplyr::one_of(price_names))
+
+  dateTime <- purrr::map_chr(prices_response$prices, "snapshotTimeUTC") %>%
+    lubridate::ymd_hms()
+
+  volume <- purrr::map_int(prices_response$prices, "lastTradedVolume")
+
+  names(prices) <- c("close", "open", "high", "low")
+
+  dplyr::bind_cols(
+    date_time = dateTime,
+    prices,
+    volume = volume
+  )
+}
+
+
+#' Request prices for a given range
+#'
+#' @param epic Instrument epic
+#' @param start_time Datetime given as character in ISO8601 format, start period
+#' @param end_time Datetime given as character in ISO8601 format, end period
+#'
+#' @return Dataframe of prices
+#' @export
+#'
+#' @examples
+request_prices_range <- function(epic, start_time, end_time, price_type = "bid") {
+  response <- make_ig_request(path = file.path("prices", epic),
+                              query = list("resolution" = "HOUR",
+                                           "from" = start_time,
+                                           "to" = end_time),
+                              api_version = 3)
+
+  prcs <- httr::content(response)
+
+  prices <- parse_prices(prcs, price_type)
+
+  dplyr::bind_cols(prices,
+                   epic = rlang::rep_along(prices$close, epic))
+
+}
+
+
