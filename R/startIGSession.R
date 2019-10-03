@@ -11,9 +11,9 @@
 #'
 #' @examples
 initiate_ig_session <- function(env = "LIVE") {
-
   assertthat::assert_that((env %in% c("LIVE", "DEMO")),
-                          msg = "env must be 'LIVE' or 'DEMO'")
+    msg = "env must be 'LIVE' or 'DEMO'"
+  )
 
   if (env == "LIVE") {
     Sys.setenv(
@@ -49,7 +49,7 @@ initiate_ig_session <- function(env = "LIVE") {
   )
 
   assertthat::assert_that(session$status_code == 200,
-                          msg = glue::glue("Response code: {httr::content(session)[[1]]}")
+    msg = glue::glue("Response code: {httr::content(session)[[1]]}")
   )
 
   Sys.setenv("SESSION_X_SECURITY_TOKEN" = session$headers$`x-security-token`)

@@ -67,9 +67,8 @@ get_option_underlyer <- function(epic) {
   underlyer_epic <- underlyers[underlyer]
 
   assertthat::assert_that(!is.na(underlyer_epic),
-                          msg = "Underlyer not found")
+    msg = "Underlyer not found"
+  )
 
   underlyer_epic
-
-
 }

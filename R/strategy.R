@@ -2,7 +2,7 @@ new_option_leg <- function(strike_price = integer(),
                            expiry = double(),
                            option_type = character(),
                            underlyer = character(),
-                           position = integer(),
+                           position = double(),
                            opening_price = double(),
                            prices = tibble::tibble(),
                            epic = character()) {
@@ -28,10 +28,10 @@ validate_option_leg <- function(leg) {
   assertthat::assert_that(
     purrr::every(
       list(
-        leg$strike_price,
+        leg$opening_price,
         leg$position
       ),
-      is.integer
+      is.double
     ),
     purrr::every(
       list(
@@ -42,7 +42,7 @@ validate_option_leg <- function(leg) {
       is.character
     ),
     is.data.frame(leg$prices),
-    is.double(leg$opening_price),
+    is.integer(leg$strike_price),
     lubridate::is.POSIXct(leg$expiry)
   )
 
@@ -72,12 +72,16 @@ validate_option_strategy <- function(strategy) {
 }
 
 print.option_strategy <- function(option_strategy) {
-  purrr::map(option_strategy$legs,
-             ~unclass(.) %>% .[c("strike_price",
-                                 "expiry",
-                                 "option_type",
-                                 "position",
-                                 "opening_price")]) %>%
+  purrr::map(
+    option_strategy$legs,
+    ~ unclass(.) %>% .[c(
+      "strike_price",
+      "expiry",
+      "option_type",
+      "position",
+      "opening_price"
+    )]
+  ) %>%
     dplyr::bind_rows()
 }
 
@@ -119,7 +123,7 @@ create_strategy <- function(epics, positions, opening_prices = NULL, resolution,
   legs <- purrr::pmap(
     list(
       epics,
-      as.integer(positions),
+      positions,
       opening_prices
     ),
     ~ option_leg(..1, ..2, ..3, resolution, n_prices)

@@ -50,8 +50,8 @@ request_prices <-
     prices <- parse_prices(prcs, price_type)
 
     dplyr::bind_cols(prices,
-                     epic = rlang::rep_along(prices$close, epic))
-
+      epic = rlang::rep_along(prices$close, epic)
+    )
   }
 
 #' Parse IG Index prices
@@ -100,19 +100,21 @@ parse_prices <- function(prices_response,
 #'
 #' @examples
 request_prices_range <- function(epic, start_time, end_time, price_type = "bid") {
-  response <- make_ig_request(path = file.path("prices", epic),
-                              query = list("resolution" = "HOUR",
-                                           "from" = start_time,
-                                           "to" = end_time),
-                              api_version = 3)
+  response <- make_ig_request(
+    path = file.path("prices", epic),
+    query = list(
+      "resolution" = "HOUR",
+      "from" = start_time,
+      "to" = end_time
+    ),
+    api_version = 3
+  )
 
   prcs <- httr::content(response)
 
   prices <- parse_prices(prcs, price_type)
 
   dplyr::bind_cols(prices,
-                   epic = rlang::rep_along(prices$close, epic))
-
+    epic = rlang::rep_along(prices$close, epic)
+  )
 }
-
-

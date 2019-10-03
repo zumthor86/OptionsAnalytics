@@ -46,7 +46,7 @@ compute_option_scenarios <- function(option_leg,
     r = 0.05, b = 0.05
   )
 
-  underlyer_space <- seq(underlyer_min-underlyer_margin, underlyer_max+underlyer_margin, 5)
+  underlyer_space <- seq(underlyer_min - underlyer_margin, underlyer_max + underlyer_margin, 5)
 
   volatility_span <- seq(vol_min, vol_max, length.out = n_scenarios)
 

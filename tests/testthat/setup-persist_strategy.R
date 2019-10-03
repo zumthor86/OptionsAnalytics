@@ -8,7 +8,7 @@ put <- glue::glue("OP.D.SPX1.{market_price}P.IP")
 
 strategy <- create_strategy(
   epics = c(call, put),
-  positions = c(1, 1),
+  positions = c(1, 0.5),
   resolution = "HOUR",
   n_prices = 5
 )

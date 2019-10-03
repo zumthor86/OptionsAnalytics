@@ -23,19 +23,17 @@ load_strategy <- function(path) {
   strat_file$legs <- purrr::modify(
     strat_file$legs,
     ~ purrr::modify_in(.x, "prices", dplyr::bind_rows)
-  )
-
-  strat_file$legs <- purrr::modify(
-    strat_file$legs,
-    ~ purrr::modify_in(.x, "expiry", lubridate::as_datetime)
-  )
-
-  strat_file$legs <- purrr::modify(
-    strat_file$legs,
-    ~ purrr::modify_in(.x, list("prices", "date_time"), lubridate::as_datetime)
-  )
-
-  strat_file$legs <- purrr::modify(strat_file$legs, ~ `class<-`(., "option_leg"))
+  ) %>%
+    purrr::modify(
+      ~ purrr::modify_in(.x, "position", as.double)
+    ) %>%
+    purrr::modify(
+      ~ purrr::modify_in(.x, "expiry", lubridate::as_datetime)
+    ) %>%
+    purrr::modify(
+      ~ purrr::modify_in(.x, list("prices", "date_time"), lubridate::as_datetime)
+    ) %>%
+    purrr::modify(~ `class<-`(., "option_leg"))
 
   strat_file <- `attr<-`(strat_file, "n_legs", length(strat_file$legs))
 }

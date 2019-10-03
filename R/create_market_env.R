@@ -9,8 +9,7 @@
 #' @importFrom rlang as_environment
 #'
 #' @examples
-create_market_env <- function(node_id, pause=0){
-
+create_market_env <- function(node_id, pause = 0) {
   instruments <- traverse_market_hierarchy(node_id, pause)
 
   instruments <- instruments %>%
@@ -22,5 +21,4 @@ create_market_env <- function(node_id, pause=0){
   all_mkt_epics <- purrr::set_names(all_mkt_epics, instruments$instrumentName)
 
   rlang::as_environment(all_mkt_epics)
-
 }
