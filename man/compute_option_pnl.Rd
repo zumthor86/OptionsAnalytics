@@ -4,19 +4,12 @@
 \alias{compute_option_pnl}
 \title{Compute option PnL Scenarios at expiry}
 \usage{
-compute_option_pnl(option_leg, underlyer_prices, underlyer_min,
-  underlyer_max, underlyer_margin = 20)
+compute_option_pnl(option_leg, underlyer_prices)
 }
 \arguments{
 \item{option_leg}{Option Leg object}
 
 \item{underlyer_prices}{Vector of underlyer closing prices}
-
-\item{underlyer_min}{Minimum underlyer price to compute profit on}
-
-\item{underlyer_max}{Maximum underlyer price to compute profit on}
-
-\item{underlyer_margin}{Additional padding at ends of pnl chart}
 }
 \description{
 Compute option PnL Scenarios at expiry

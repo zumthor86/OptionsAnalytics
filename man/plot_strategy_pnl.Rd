@@ -4,12 +4,10 @@
 \alias{plot_strategy_pnl}
 \title{Plot option Profit and Loss Scenarios}
 \usage{
-plot_strategy_pnl(strategy, underlyer_margin = 40)
+plot_strategy_pnl(strategy)
 }
 \arguments{
 \item{strategy}{Strategy object}
-
-\item{underlyer_margin}{Integer specifying padding at margins of PnL graph}
 }
 \value{
 Plot of PnL

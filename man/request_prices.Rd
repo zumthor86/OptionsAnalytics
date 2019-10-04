@@ -2,7 +2,7 @@
 % Please edit documentation in R/priceReq.R
 \name{request_prices}
 \alias{request_prices}
-\title{Request historical prices}
+\title{Request number of historical prices}
 \usage{
 request_prices(epic = "IX.D.SPTRD.DAILY.IP", resolution = "HOUR",
   n_prices = 5, price_type = "bid")
@@ -20,5 +20,5 @@ request_prices(epic = "IX.D.SPTRD.DAILY.IP", resolution = "HOUR",
 Dataframe of historical prices
 }
 \description{
-Request historical prices
+Request number of historical prices
 }

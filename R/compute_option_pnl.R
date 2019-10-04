@@ -27,9 +27,8 @@ plot_strategy_pnl <- function(strategy) {
 
   pos <- which(pnl_scen > 0)
 
-  if (min(pos)==1 & max(pos)==length(pnl_scen)){
-
-    pos <- which(pnl_scen*-1 > 0)
+  if (min(pos) == 1 & max(pos) == length(pnl_scen)) {
+    pos <- which(pnl_scen * -1 > 0)
   }
 
   start_pos <- min(pos)
@@ -67,7 +66,7 @@ plot_strategy_pnl <- function(strategy) {
     )
   )
 
-  data_subset <- abs(pnl_scen)<50
+  data_subset <- abs(pnl_scen) < 50
 
   base_plot <- plotly::plot_ly() %>%
     plotly::add_trace(

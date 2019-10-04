@@ -57,6 +57,7 @@ request_prices <-
 #' Parse IG Index prices
 #'
 #' @param prices_response Response from IG index
+#' @param price_type "Bid" or "ask"
 #'
 #' @return Dataframe of historical prices
 #'
@@ -94,6 +95,7 @@ parse_prices <- function(prices_response,
 #' @param epic Instrument epic
 #' @param start_time Datetime given as character in ISO8601 format, start period
 #' @param end_time Datetime given as character in ISO8601 format, end period
+#' @param price_type "Bid" or "Ask"
 #'
 #' @return Dataframe of prices
 #' @export
