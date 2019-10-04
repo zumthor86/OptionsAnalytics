@@ -1,7 +1,6 @@
 #' Plot option Profit and Loss Scenarios
 #'
 #' @param strategy Strategy object
-#' @param underlyer_margin Integer specifying padding at margins of PnL graph
 #'
 #' @return Plot of PnL
 #' @export
@@ -26,9 +25,12 @@ plot_strategy_pnl <- function(strategy) {
     ~ (..1 - ..2) * ..3
   ) %>% purrr::reduce(`+`)
 
-  AUC <- pracma::trapz(as.numeric(rownames(pnl_scen)), pnl_scen[, 1]) %>% round()
-
   pos <- which(pnl_scen > 0)
+
+  if (min(pos)==1 & max(pos)==length(pnl_scen)){
+
+    pos <- which(pnl_scen*-1 > 0)
+  }
 
   start_pos <- min(pos)
 
@@ -52,9 +54,6 @@ plot_strategy_pnl <- function(strategy) {
     max_brkeven <- round(inter_max$x[which.min(abs(inter_max$y))], 2)
   }
 
-
-  annotation <- glue::glue("Profit AUC:{AUC}")
-
   underlyer <- rownames(pnl_scen)
 
   max_profit <- max(pnl_scen)
@@ -68,18 +67,14 @@ plot_strategy_pnl <- function(strategy) {
     )
   )
 
+  data_subset <- abs(pnl_scen)<50
+
   base_plot <- plotly::plot_ly() %>%
     plotly::add_trace(
-      x = underlyer,
-      y = pnl_scen[, 1],
+      x = underlyer[data_subset],
+      y = pnl_scen[data_subset, 1],
       type = "scatter",
       mode = "lines+markers"
-    ) %>%
-    plotly::add_text(
-      x = as.numeric(min(underlyer)),
-      y = max_profit,
-      text = annotation,
-      color = I("white")
     ) %>%
     plotly::layout(
       showlegend = FALSE,
@@ -119,9 +114,6 @@ plot_strategy_pnl <- function(strategy) {
 #'
 #' @param option_leg Option Leg object
 #' @param underlyer_prices Vector of underlyer closing prices
-#' @param underlyer_min Minimum underlyer price to compute profit on
-#' @param underlyer_max Maximum underlyer price to compute profit on
-#' @param underlyer_margin Additional padding at ends of pnl chart
 #'
 #' @return
 #'

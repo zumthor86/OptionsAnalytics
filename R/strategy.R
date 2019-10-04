@@ -97,7 +97,7 @@ option_leg <- function(epic, position, opening_price, resolution, n_prices) {
     expiry = details$expiry_datetime,
     option_type = details$option_type,
     underlyer = details$underlyer,
-    position = position,
+    position = as.double(position),
     opening_price = opening_price,
     prices = prices,
     epic = epic
