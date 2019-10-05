@@ -25,11 +25,21 @@ fill_prices <- function(legs){
 
 }
 
+#' Fill missing leg prices
+#'
+#' @param leg_prices Dataframe of option leg prices
+#' @param union_datetime Vector or datetimes to join on
+#'
+#' @importFrom tidyr fill
+#'
+#' @return
+#'
+#' @examples
 expand_prices <- function(leg_prices, union_datetime){
 
   dplyr::full_join(leg_prices,
                    tibble(date_time=union_datetime)) %>%
-    dplyr::arrange(date_time) %>%
+    dplyr::arrange(.data$date_time) %>%
     tidyr::fill(dplyr::everything(),
                 .direction = "up")
 
