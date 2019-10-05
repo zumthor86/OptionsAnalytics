@@ -52,11 +52,14 @@ validate_option_leg <- function(leg) {
 
 new_option_strategy <- function(legs = list(),
                                 underlyer_prices = tibble::tibble()) {
+
+  filled_legs <- fill_strategy_prices(legs)
+
   structure(list(
-    "legs" = legs,
+    "legs" = filled_legs,
     "underlyer_prices" = underlyer_prices
   ),
-  n_legs = length(legs),
+  n_legs = length(filled_legs),
   class = "option_strategy"
   )
 }

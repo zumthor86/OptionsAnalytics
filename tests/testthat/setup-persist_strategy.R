@@ -1,6 +1,6 @@
 initiate_ig_session("DEMO")
 
-market_price <- signif(request_prices(n_prices = 1)$close, 2)
+market_price <- signif(request_prices(n_prices = 2)$close[1], 2)
 
 call <- glue::glue("OP.D.SPX1.{market_price}C.IP")
 
