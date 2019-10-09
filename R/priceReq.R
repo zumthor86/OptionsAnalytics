@@ -100,6 +100,8 @@ parse_prices <- function(prices_response,
 #' @return Dataframe of prices
 #' @export
 #'
+#' @importFrom rlang rep_along
+#'
 #' @examples
 request_prices_range <- function(epic, start_time, end_time, price_type = "bid") {
   response <- make_ig_request(
@@ -107,7 +109,9 @@ request_prices_range <- function(epic, start_time, end_time, price_type = "bid")
     query = list(
       "resolution" = "HOUR",
       "from" = start_time,
-      "to" = end_time
+      "to" = end_time,
+      "max" = 1000,
+      "pageSize" = 1000
     ),
     api_version = 3
   )

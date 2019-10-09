@@ -10,7 +10,7 @@ strategy <- create_strategy(
   epics = c(call, put),
   positions = c(1, 0.5),
   resolution = "HOUR",
-  n_prices = 5
+  n_prices = 20
 )
 
 tmp_strat_file <- tempfile()
