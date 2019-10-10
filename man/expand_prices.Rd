@@ -11,6 +11,9 @@ expand_prices(leg_prices, union_datetime)
 
 \item{union_datetime}{Vector or datetimes to join on}
 }
+\value{
+Prices dataframe with missing values filled with prior prices
+}
 \description{
 Fill missing leg prices
 }

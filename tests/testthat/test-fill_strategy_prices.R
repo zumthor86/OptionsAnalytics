@@ -1,21 +1,19 @@
 test_that("Refreshing prices returns correct price data", {
+  hours_diff <- lubridate::hour(Sys.time()) - lubridate::hour(lubridate::with_tz(Sys.time(), "UTC"))
 
-  start_time <-  format(strategy$legs[[1]]$prices$date_time[1],
-                        format = "%Y-%m-%dT%H:%M:%S")
+  start_time <- format_price_request(strategy$legs[[1]]$prices$date_time[1])
 
-  end_time <- format(tail(strategy$legs[[1]]$prices$date_time,1),
-                     format = "%Y-%m-%dT%H:%M:%S" )
+  end_time <- format_price_request(tail(strategy$legs[[1]]$prices$date_time, 1))
 
-  strategy$legs[[1]]$prices <- head(strategy$legs[[1]]$prices,10)
+  strategy$legs[[1]]$prices <- head(strategy$legs[[1]]$prices, 10)
 
-  price_data <- request_prices_range(strategy$legs[[1]]$epic, start_time, end_time)
+  price_data <- request_prices_range(
+    strategy$legs[[1]]$epic,
+    start_time,
+    end_time
+  )
 
   refreshed_strategy <- refresh_strategy(strategy)
 
-  print(price_data$close)
-
-  print(refreshed_strategy$legs[[1]]$prices$close)
-
   expect_equal(price_data$close, refreshed_strategy$legs[[1]]$prices$close)
-
 })

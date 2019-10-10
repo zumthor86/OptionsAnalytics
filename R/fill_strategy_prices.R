@@ -4,7 +4,7 @@
 #'
 #' @return Option legs with new price data added
 #'
-#' @importFrom purrr::flatten
+#' @importFrom purrr flatten
 #'
 #' @examples
 fill_strategy_prices <- function(legs) {
@@ -73,19 +73,28 @@ expand_prices <- function(leg_prices, union_datetime) {
 #' @return Option strategy with up to date prices
 #' @export
 #'
+#' @importFrom iterators iter
+#' @importFrom iterators nextElem
+#' @importFrom lubridate hours
+#' @importFrom lubridate with_tz
+#' @importFrom lubridate floor_date
+#'
 #' @examples
 refresh_strategy <- function(strategy) {
+  # TODO shift prices forward one hour
+
   start_times <- purrr::map(strategy$legs, list("prices", "date_time")) %>%
     purrr::map(~ tail(., 1)) %>%
     append(list(tail(strategy$underlyer_prices$date_time, 1))) %>%
-    purrr::map(~ format(., format = "%Y-%m-%dT%H:%M:%S"))
+    purrr::map(format_price_request)
 
   end_time <- lubridate::floor_date(lubridate::with_tz(Sys.time(),
     tzone = "UTC"
   ),
   unit = "hour"
   ) %>%
-    format(format = "%Y-%m-%dT%H:%M:%S")
+    format_price_request()
+
 
   epics <- purrr::map_chr(strategy$legs, "epic") %>%
     append(strategy$legs[[1]]$underlyer)
@@ -110,4 +119,12 @@ refresh_strategy <- function(strategy) {
   strategy$legs <- fill_strategy_prices(strategy$legs)
 
   strategy
+}
+
+format_price_request <- function(date_time, hours_offset = NULL) {
+  if (is.null(hours_offset)) hours_offset <- lubridate::hour(Sys.time()) - lubridate::hour(lubridate::with_tz(Sys.time(), "UTC"))
+
+  format(date_time + lubridate::hours(hours_offset),
+    format = "%Y-%m-%dT%H:%M:%S"
+  )
 }
