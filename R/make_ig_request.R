@@ -5,7 +5,6 @@
 #' @param query Optional query parameters
 #'
 #' @return
-#' @export
 #'
 #' @examples
 make_ig_request <- function(path, api_version, query = NULL) {

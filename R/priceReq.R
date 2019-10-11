@@ -75,7 +75,7 @@ parse_prices <- function(prices_response,
     dplyr::bind_rows() %>%
     dplyr::select(dplyr::one_of(price_names))
 
-  dateTime <- purrr::map_chr(prices_response$prices, "snapshotTimeUTC") %>%
+  date_time <- purrr::map_chr(prices_response$prices, "snapshotTimeUTC") %>%
     lubridate::ymd_hms()
 
   volume <- purrr::map_int(prices_response$prices, "lastTradedVolume")
@@ -83,7 +83,7 @@ parse_prices <- function(prices_response,
   names(prices) <- c("close", "open", "high", "low")
 
   dplyr::bind_cols(
-    date_time = dateTime,
+    date_time = date_time,
     prices,
     volume = volume
   )

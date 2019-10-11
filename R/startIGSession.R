@@ -36,7 +36,7 @@ initiate_ig_session <- function(env = "LIVE") {
     password = Sys.getenv("SESSION_IG_PASSWORD")
   )
 
-  host <- Sys.getenv("SESSION_IG_HOST")
+  host <- Sys.getenv('SESSION_IG_HOST')
 
   session <- httr::POST(
     url = glue::glue("https://{host}/gateway/deal/session"),

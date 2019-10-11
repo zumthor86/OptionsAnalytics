@@ -4,11 +4,10 @@
 #' @param pause Due to api limits it may be necessary when traversing lots of nodes to introduce a pause to avoid exceeding said limits
 #'
 #' @return A dataframe containing markets details
-#' @export
 #'
 #' @examples
 traverse_market_hierarchy <- function(node_id, pause = 0) {
-  slow_mkt_nav <- slowExec(pause, request_market_navigation)
+  slow_mkt_nav <- slow_exec(pause, request_market_navigation)
 
 
   results <- slow_mkt_nav(node_id)
@@ -31,7 +30,6 @@ traverse_market_hierarchy <- function(node_id, pause = 0) {
 #' @param node_id Numeric id for a particular node in the market hierarchy
 #'
 #' @return Node data, containing either IDs of children nodes or market information if its a leaf
-#' @export
 #'
 request_market_navigation <- function(node_id) {
   path <- glue::glue("marketnavigation/{node_id}")
@@ -41,7 +39,7 @@ request_market_navigation <- function(node_id) {
 }
 
 
-slowExec <- function(pause, f, ...) {
+slow_exec <- function(pause, f, ...) {
   function(...) {
     Sys.sleep(pause)
 
