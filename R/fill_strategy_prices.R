@@ -85,16 +85,13 @@ refresh_strategy <- function(strategy) {
 
   start_times <- purrr::map(strategy$legs, list("prices", "date_time")) %>%
     purrr::map(~ tail(., 1)) %>%
-    append(list(tail(strategy$underlyer_prices$date_time, 1))) %>%
-    purrr::map(format_price_request)
+    append(list(tail(strategy$underlyer_prices$date_time, 1)))
 
   end_time <- lubridate::floor_date(lubridate::with_tz(Sys.time(),
     tzone = "UTC"
   ),
   unit = "hour"
-  ) %>%
-    format_price_request()
-
+  )
 
   epics <- purrr::map_chr(strategy$legs, "epic") %>%
     append(strategy$legs[[1]]$underlyer)
@@ -124,7 +121,7 @@ refresh_strategy <- function(strategy) {
 format_price_request <- function(date_time, hours_offset = NULL) {
   if (is.null(hours_offset)) hours_offset <- lubridate::hour(Sys.time()) - lubridate::hour(lubridate::with_tz(Sys.time(), "UTC"))
 
-  format(date_time + lubridate::hours(hours_offset),
+  format(lubridate::as_datetime(date_time) + lubridate::hours(hours_offset),
     format = "%Y-%m-%dT%H:%M:%S"
   )
 }

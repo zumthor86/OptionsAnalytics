@@ -9,9 +9,9 @@ request_prices_range(epic, start_time, end_time, price_type = "bid")
 \arguments{
 \item{epic}{Instrument epic}
 
-\item{start_time}{Datetime given as character in ISO8601 format, start period}
+\item{start_time}{Datetime given as character in ISO8601 format UTC time, start period}
 
-\item{end_time}{Datetime given as character in ISO8601 format, end period}
+\item{end_time}{Datetime given as character in ISO8601 format UTC time, end period}
 
 \item{price_type}{"Bid" or "Ask"}
 }

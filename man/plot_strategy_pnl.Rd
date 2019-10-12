@@ -4,10 +4,12 @@
 \alias{plot_strategy_pnl}
 \title{Plot option Profit and Loss Scenarios}
 \usage{
-plot_strategy_pnl(strategy)
+plot_strategy_pnl(strategy, plot_range = 100)
 }
 \arguments{
 \item{strategy}{Strategy object}
+
+\item{plot_range}{Maximum pnl range, integer}
 }
 \value{
 Plot of PnL

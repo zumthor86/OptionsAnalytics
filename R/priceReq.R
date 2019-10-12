@@ -93,8 +93,8 @@ parse_prices <- function(prices_response,
 #' Request prices for a given range
 #'
 #' @param epic Instrument epic
-#' @param start_time Datetime given as character in ISO8601 format, start period
-#' @param end_time Datetime given as character in ISO8601 format, end period
+#' @param start_time Datetime given as character in ISO8601 format UTC time, start period
+#' @param end_time Datetime given as character in ISO8601 format UTC time, end period
 #' @param price_type "Bid" or "Ask"
 #'
 #' @return Dataframe of prices
@@ -108,8 +108,8 @@ request_prices_range <- function(epic, start_time, end_time, price_type = "bid")
     path = file.path("prices", epic),
     query = list(
       "resolution" = "HOUR",
-      "from" = start_time,
-      "to" = end_time,
+      "from" = format_price_request(start_time),
+      "to" = format_price_request(end_time),
       "max" = 1000,
       "pageSize" = 1000
     ),

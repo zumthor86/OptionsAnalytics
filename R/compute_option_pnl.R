@@ -1,6 +1,7 @@
 #' Plot option Profit and Loss Scenarios
 #'
 #' @param strategy Strategy object
+#' @param plot_range Maximum pnl range, integer
 #'
 #' @return Plot of PnL
 #' @export
@@ -8,7 +9,7 @@
 #' @importFrom pracma trapz
 #'
 #' @examples
-plot_strategy_pnl <- function(strategy) {
+plot_strategy_pnl <- function(strategy, plot_range=100) {
   strikes <- purrr::map_int(strategy$legs, "strike_price")
 
   pnls <- purrr::map(
@@ -66,7 +67,7 @@ plot_strategy_pnl <- function(strategy) {
     )
   )
 
-  data_subset <- abs(pnl_scen) < 50
+  data_subset <- abs(pnl_scen) < plot_range
 
   base_plot <- plotly::plot_ly() %>%
     plotly::add_trace(
@@ -90,7 +91,7 @@ plot_strategy_pnl <- function(strategy) {
         x = min_brkeven,
         xend = min_brkeven,
         y = 0,
-        yend = max_profit,
+        yend = plot_range,
         color = I("grey")
       )
   }
@@ -101,7 +102,7 @@ plot_strategy_pnl <- function(strategy) {
         x = max_brkeven,
         xend = max_brkeven,
         y = 0,
-        yend = max_profit,
+        yend = plot_range,
         color = I("grey")
       )
   }
