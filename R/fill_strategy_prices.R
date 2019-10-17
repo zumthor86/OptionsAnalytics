@@ -35,6 +35,12 @@ fill_prices <- function(legs) {
     purrr::reduce(union) %>%
     lubridate::as_datetime()
 
+  latest_start <- purrr::map(legs, list("prices", "date_time")) %>%
+    purrr::map(head,1) %>%
+    purrr::reduce(max)
+
+  union_datetime <- sort(union_datetime[union_datetime>=latest_start])
+
   purrr::map(
     legs,
     ~ purrr::modify_in(
@@ -61,7 +67,7 @@ expand_prices <- function(leg_prices, union_datetime) {
   ) %>%
     dplyr::arrange(.data$date_time) %>%
     tidyr::fill(dplyr::everything(),
-      .direction = "up"
+      .direction = "updown"
     )
 }
 

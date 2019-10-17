@@ -74,7 +74,7 @@ validate_option_strategy <- function(strategy) {
 }
 
 print.option_strategy <- function(option_strategy) {
-  purrr::map(
+  print(purrr::map(
     option_strategy$legs,
     ~ unclass(.) %>% .[c(
       "strike_price",
@@ -84,7 +84,9 @@ print.option_strategy <- function(option_strategy) {
       "opening_price"
     )]
   ) %>%
-    dplyr::bind_rows()
+    dplyr::bind_rows())
+
+
 }
 
 option_leg <- function(epic, position, opening_price, resolution, n_prices) {
