@@ -3,3 +3,5 @@
 ^LICENSE\.md$
 ^\.travis\.yml$
 ^README\.Rmd$
+^renv$
+^renv\.lock$
