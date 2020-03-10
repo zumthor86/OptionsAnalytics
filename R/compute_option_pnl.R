@@ -9,8 +9,10 @@
 #' @importFrom pracma trapz
 #'
 #' @examples
-plot_strategy_pnl <- function(strategy, plot_range=100) {
+plot_strategy_pnl <- function(strategy) {
   strikes <- purrr::map_int(strategy$legs, "strike_price")
+
+  plot_range <- 100*max(abs(purrr::map_dbl(strategy$legs, "position")))
 
   pnls <- purrr::map(
     strategy$legs,
