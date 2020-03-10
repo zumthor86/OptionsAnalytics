@@ -11,6 +11,9 @@ create_market_env(node_id, pause = 0)
 
 \item{pause}{Seconds to pause between requests}
 }
+\value{
+
+}
 \description{
 Create market environment
 }

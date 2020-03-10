@@ -31,4 +31,4 @@ BugReports: https://github.com/zumthor86/OptionsAnalytics/issues
 Suggests: 
     testthat (>= 2.1.0)
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

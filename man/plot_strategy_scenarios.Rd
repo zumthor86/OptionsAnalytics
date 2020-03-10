@@ -4,8 +4,7 @@
 \alias{plot_strategy_scenarios}
 \title{Plot an existing positions PnL scenarios at a given time}
 \usage{
-plot_strategy_scenarios(strategy, scenario_datetime,
-  underlyer_margin = 20)
+plot_strategy_scenarios(strategy, scenario_datetime, underlyer_margin = 20)
 }
 \arguments{
 \item{strategy}{Strategy object}

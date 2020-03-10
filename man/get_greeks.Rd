@@ -4,12 +4,20 @@
 \alias{get_greeks}
 \title{Compute greeks for an option}
 \usage{
-get_greeks(r = 0.05, b = 0.05, underlyer_annual_vol = 0.115,
-  exposure = 1, time_to_mat, strike_price, underlyer_price, option_type,
-  greek_selections = c("delta", "gamma", "vega", "theta"))
+get_greeks(
+  r = 0.05,
+  b = 0.05,
+  underlyer_annual_vol = 0.115,
+  exposure = 1,
+  time_to_mat,
+  strike_price,
+  underlyer_price,
+  option_type,
+  greek_selections = c("delta", "gamma", "vega", "theta")
+)
 }
 \arguments{
-\item{r}{Annualized rate of interest, \emph{as a decimal}, eg. 0.5 \% is 0.05}
+\item{r}{Annualized rate of interest, \emph{as a decimal}, eg. 0.5 \\% is 0.05}
 
 \item{b}{Annualized cost of carry \emph{as a decimal}}
 

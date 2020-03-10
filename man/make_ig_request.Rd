@@ -13,6 +13,9 @@ make_ig_request(path, api_version, query = NULL)
 
 \item{query}{Optional query parameters}
 }
+\value{
+
+}
 \description{
 Make generic IG API request
 }

@@ -11,6 +11,9 @@ save_strategy(strategy, path)
 
 \item{path}{File name}
 }
+\value{
+
+}
 \description{
 Save option strategy
 }

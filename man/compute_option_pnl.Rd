@@ -11,6 +11,9 @@ compute_option_pnl(option_leg, underlyer_prices)
 
 \item{underlyer_prices}{Vector of underlyer closing prices}
 }
+\value{
+
+}
 \description{
 Compute option PnL Scenarios at expiry
 }

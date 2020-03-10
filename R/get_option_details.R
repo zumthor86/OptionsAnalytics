@@ -45,9 +45,10 @@ get_option_details <- function(epic) {
 #' @importFrom stringr str_extract
 #' @examples
 get_option_underlyer <- function(epic) {
-  underlyer <- stringr::str_extract(epic, "SI|GC|GOLDWEEK|OIL|SP|EURO|BR|EGBP|EJPY|GBPY|GBP|AUD|CAD|JPY+")
+  underlyer <- stringr::str_extract(epic, "FTSE|SI|GC|GOLDWEEK|OIL|SP|EURO|BR|EGBP|EJPY|GBPY|GBP|AUD|CAD|JPY+")
 
   underlyers <- c(
+    "FTSE" = "IX.D.FTSE.DAILY.IP",
     "SP" = "IX.D.SPTRD.DAILY.IP",
     "BR" = "CS.D.GBPUSD.TODAY.IP",
     "AUD" = "CS.D.AUDUSD.TODAY.IP",

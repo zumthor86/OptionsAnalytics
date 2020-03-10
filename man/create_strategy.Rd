@@ -4,8 +4,7 @@
 \alias{create_strategy}
 \title{Instantiate new strategy object}
 \usage{
-create_strategy(epics, positions, opening_prices = NULL, resolution,
-  n_prices)
+create_strategy(epics, positions, opening_prices = NULL, resolution, n_prices)
 }
 \arguments{
 \item{epics}{Vector or epics for each leg of strategy}
@@ -17,6 +16,9 @@ create_strategy(epics, positions, opening_prices = NULL, resolution,
 \item{resolution}{Plot resolution, eg. "HOUR", "MINUTE_5", "DAY"}
 
 \item{n_prices}{Number of prices}
+}
+\value{
+
 }
 \description{
 Instantiate new strategy object

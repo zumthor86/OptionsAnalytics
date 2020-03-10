@@ -26,50 +26,19 @@ plot_strategy_prices <- function(strategy) {
     plotly::add_trace(y = ~vega, name = "vega", color = I(greeks_colors[[2]]), mode = "lines+markers", type = "scatter") %>%
     plotly::add_trace(y = ~gamma, name = "gamma", color = I(greeks_colors[[3]]), mode = "lines+markers", type = "scatter") %>%
     plotly::add_trace(y = ~theta, name = "theta", color = I(greeks_colors[[4]]), mode = "lines+markers", type = "scatter") %>%
-    plotly::layout(
-      xaxis = list("type" = "category", "title" = "DateTime", color = "white"),
-      yaxis = list("title" = "Exposures", color = "white")
-    )
+    style_plot(y_axis_title = "Exposures", x_axis_title = "DateTime")
 
   common_strat_prices <- strategy$underlyer_prices %>%
     dplyr::semi_join(strategy_prices, by = "date_time")
 
   underlyer_plot <- plotly::plot_ly(common_strat_prices, x = ~date_time) %>%
     plotly::add_trace(y = ~close, name = "underlyer", color = I("white"), mode = "lines+markers", type = "scatter") %>%
-    plotly::layout(
-      yaxis = list("title" = "Price", color = "white"),
-      xaxis = list("type" = "category")
-    )
+    style_plot(y_axis_title = "Price")
 
   strategy_plot <- plotly::plot_ly(strategy_prices) %>%
     plotly::add_trace(x = ~date_time, y = ~close, name = "strategy", mode = "lines+markers", type = "scatter") %>%
-    plotly::layout(
-      yaxis = list("title" = "Price", color = "white"),
-      xaxis = list("type" = "category")
-    )
-
-  legend_style <- list(
-    "font" = list(
-      "family" = "sans-serif",
-      "size" = 12,
-      "color" = "white"
-    )
-  )
-
-  plot_title <- list(
-    "text" = "Strategy Prices",
-    "font" = list(
-      "family" = "sans-serif",
-      "size" = 16,
-      "color" = "white"
-    )
-  )
+    style_plot(y_axis_title = "Price")
 
   plotly::subplot(strategy_plot, underlyer_plot, greeks_plot, shareX = T, nrows = 3) %>%
-    plotly::layout(
-      plot_bgcolor = "#252525",
-      paper_bgcolor = "#252525",
-      xaxis = list("showticklabels" = F, showline = F),
-      legend = legend_style, title = plot_title
-    )
+    style_subplot("Strategy Prices")
 }

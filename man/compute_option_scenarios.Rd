@@ -4,9 +4,17 @@
 \alias{compute_option_scenarios}
 \title{Compute option price scenarios at a given point in time}
 \usage{
-compute_option_scenarios(option_leg, scenario_datetime, underlyer_prices,
-  underlyer_min, underlyer_max, underlyer_margin = 20, vol_min = 0.7,
-  vol_max = 1.3, n_scenarios = 20)
+compute_option_scenarios(
+  option_leg,
+  scenario_datetime,
+  underlyer_prices,
+  underlyer_min,
+  underlyer_max,
+  underlyer_margin = 20,
+  vol_min = 0.7,
+  vol_max = 1.3,
+  n_scenarios = 20
+)
 }
 \arguments{
 \item{option_leg}{Option Leg object}
