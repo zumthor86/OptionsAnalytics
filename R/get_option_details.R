@@ -62,7 +62,8 @@ get_option_underlyer <- function(epic) {
     "OIL" = "CC.D.CL.USS.IP",
     "GC" = "CS.D.USCGC.TODAY.IP",
     "SI" = "CS.D.USCSI.TODAY.IP",
-    "GOLDWEEK" = "MT.D.GC.MONTH1.IP"
+    "GOLDWEEK" = "MT.D.GC.MONTH1.IP",
+    "DAX" = "IX.D.DAX.DAILY.IP" 
   )
 
   underlyer_epic <- underlyers[underlyer]
